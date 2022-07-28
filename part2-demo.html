@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Cynthia Siew" />
+
+
+<title>VPF NetSci Tutorial</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">An Introduction to Network Analysis for Psycholinguists</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="part1-intro.html">Slides</a>
+</li>
+<li>
+  <a href="part2-demo.html">Workbook</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">VPF NetSci Tutorial</h1>
+<h3 class="subtitle">Part 2: Demonstration</h3>
+<h4 class="author">Cynthia Siew</h4>
+<h4 class="date">7/25/2022</h4>
+
+</div>
+
+
+<div id="set-up" class="section level1">
+<h1>Set up</h1>
+<pre class="r"><code>library(igraph)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;igraph&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     decompose, spectrum</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     union</code></pre>
+<pre class="r"><code>load(&#39;data/example-data.RData&#39;)</code></pre>
+<p>There should be 4 objects loaded into your R workspace: -
+<code>pnet_edgelist</code> - <code>pnet_adjmat</code> -
+<code>snet_edgelist</code> - <code>snet_adjmat</code></p>
+<p><code>pnet</code> refers to a section of the phonological network
+first described by Vitevitch (2008). The nodes represent English words,
+and edges connect words that are phonological neighbors of each other
+based on the 1-edit distance metric computed on their phonological
+transcriptions (Luce &amp; Pisoni, 1998). E.g., /<a href="mailto:k@t"
+class="email">k@t</a>/–/<a href="mailto:k@p" class="email">k@p</a>/ are
+neighboring nodes. Specifically, this network is the 2-hop network of
+the word ‘speech’ - in addition to ‘speech’ itself, its immediate
+phonological neighbors and the neighbors of its neighbors are included
+in this representation.</p>
+<p><code>snet</code> refers to a section of the word association network
+using data from De Deyne et al. (2020). The nodes represent English
+words, and edges connect words that are produced as free associations of
+other words. E.g., “cat”–“dog” are neighboring nodes. This network has
+edges with 2 interesting properties. (i) Each edge has a
+<code>weight</code> attribute that corresponds to the associative
+strength of two nodes, or the proportion of participants who provided a
+specific response to the cue word. (ii) The edges are also
+<code>directed</code> such the direction goes <em>from</em> the cue word
+<em>to</em> the response word, i.e., “cat”-&gt;“dog”. Specifically, this
+network is the 1-hop network of the word ‘cheese’ - in addition to
+‘cheese’ itself, its immediate associates and the cue words that led to
+the response ‘cheese’ are included in this representation. See also <a
+href="https://smallworldofwords.org/en/project/research"
+class="uri">https://smallworldofwords.org/en/project/research</a> for
+more information.</p>
+<p><code>edgelist</code> refers to a type of network data representation
+where each row represents a single edge in the network with at least 2
+columns where the labels of connected nodes are provided. The number of
+rows in the edge list corresponds to the number of edges in the network.
+Additional columns can be specified that provide more information about
+the edges (e.g., type, weight).</p>
+<p><code>adjmat</code> refers to a type of network data representation
+known as an adjacency matrix where the edge connectivity is represented
+in the matrix. The number of rows and columns correspond to the number
+of nodes in the network. A non-zero value in the [i,j] element of the
+adjacency matrix indicates the presence of a link between node
+<em>i</em> and node <em>j</em>.</p>
+<pre class="r"><code>head(pnet_edgelist, 3)</code></pre>
+<pre><code>##      [,1]        [,2]       
+## [1,] &quot;biC;beach&quot; &quot;iC;each&quot;  
+## [2,] &quot;biC;beach&quot; &quot;liC;leach&quot;
+## [3,] &quot;iC;each&quot;   &quot;liC;leach&quot;</code></pre>
+<pre class="r"><code>head(snet_edgelist, 3)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["from"],"name":[1],"type":["chr"],"align":["left"]},{"label":["to"],"name":[2],"type":["chr"],"align":["left"]},{"label":["weight"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"age","2":"aging","3":"0.02","_rn_":"1"},{"1":"age","2":"cheese","3":"0.02","_rn_":"2"},{"1":"age","2":"mature","3":"0.06","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code># pnet_adjmat[1:5, 1:5] 
+
+# snet_adjmat[1:5, 1:5]</code></pre>
+</div>
+<div id="creating-a-network-from-your-data" class="section level1">
+<h1>Creating a network from your data</h1>
+<div
+id="example-1-phonological-network-with-undirected-and-unweighted-edges"
+class="section level2">
+<h2>Example 1: Phonological network with <em>undirected</em> and
+<em>unweighted</em> edges</h2>
+<div id="from-an-adjacency-matrix" class="section level3">
+<h3>From an adjacency matrix</h3>
+<pre class="r"><code>g_pnet_adjmat &lt;- graph_from_adjacency_matrix(
+  adjmatrix = pnet_adjmat, 
+  mode = &#39;undirected&#39;, 
+  weighted = NULL
+  )</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre class="r"><code>summary(g_pnet_adjmat)</code></pre>
+<pre><code>## IGRAPH f03348c UN-- 39 121 -- 
+## + attr: name (v/c)</code></pre>
+</div>
+<div id="from-an-edge-list" class="section level3">
+<h3>From an edge list</h3>
+<pre class="r"><code>g_pnet_edgelist &lt;- graph_from_edgelist(
+  el = pnet_edgelist, 
+  directed = FALSE
+  )
+
+summary(g_pnet_edgelist)</code></pre>
+<pre><code>## IGRAPH a861a07 UN-- 39 121 -- 
+## + attr: name (v/c)</code></pre>
+</div>
+</div>
+<div id="example-2-semantic-network-with-directed-and-weighted-edges"
+class="section level2">
+<h2>Example 2: Semantic network with <em>directed</em> and
+<em>weighted</em> edges</h2>
+<div id="from-an-adjacency-matrix-1" class="section level3">
+<h3>From an adjacency matrix</h3>
+<pre class="r"><code>g_snet_adjmat &lt;- graph_from_adjacency_matrix(
+  adjmatrix = snet_adjmat, 
+  mode = &#39;directed&#39;, 
+  weighted = &#39;weight&#39;
+  )
+
+summary(g_snet_adjmat)</code></pre>
+<pre><code>## IGRAPH 628c104 DNW- 211 1332 -- 
+## + attr: name (v/c), weight (e/n)</code></pre>
+<p>Note that the direction of edges in directed networks follows this
+convention: ‘From’ = rows; ‘To’ = columns</p>
+<p>Here is an example:</p>
+<pre class="r"><code>snet_adjmat[1:5, 1:5] # from &#39;age&#39; to &#39;aging&#39;</code></pre>
+<pre><code>## 5 x 5 sparse Matrix of class &quot;dgCMatrix&quot;
+##          age aged ages aging american
+## age        .    .    .  0.02     .   
+## aged       .    .    .  .        .   
+## ages       .    .    .  .        .   
+## aging      .    .    .  .        .   
+## american   .    .    .  .        0.02</code></pre>
+<pre class="r"><code>E(g_snet_adjmat) |&gt; head() # &#39;|&gt;&#39; pipes output from one function into another </code></pre>
+<pre><code>## + 6/1332 edges from 628c104 (vertex names):
+## [1] mature  -&gt;age   maturity-&gt;age   mature  -&gt;aged  maturity-&gt;aged 
+## [5] age     -&gt;aging maturity-&gt;aging</code></pre>
+</div>
+<div id="from-an-edge-list-1" class="section level3">
+<h3>From an edge list</h3>
+<pre class="r"><code>g_snet_edgelist &lt;- graph_from_data_frame(
+  d = snet_edgelist, 
+  directed = TRUE, 
+  vertices = NULL
+  )
+
+summary(g_snet_edgelist)</code></pre>
+<pre><code>## IGRAPH d756b80 DNW- 211 1332 -- 
+## + attr: name (v/c), weight (e/n)</code></pre>
+<p>The column containing the edge weights must be labelled ‘weight’ in
+the data frame. Note that we used the <code>graph_from_data_frame</code>
+function here instead of the <code>graph_from_edgelist</code> function,
+as the latter does not have an argument to specify the edge weights.</p>
+</div>
+</div>
+</div>
+<div id="measuring-the-network" class="section level1">
+<h1>Measuring the network</h1>
+<p>Once we have a network representation, the tools of network science
+can be applied to analyze the networks in different ways. In this
+tutorial we focus on a <em>descriptive</em> analysis of the network and
+review various network measures that can be used to describe or quantify
+network structure at three different levels of the network: the
+micro-level (referring to the local structure and other properties of
+individual nodes), the meso-level (subgroups or clusters of nodes), and
+the macro-level (referring to the overall or global structure of the
+network).</p>
+<div id="micro-level-node-level" class="section level2">
+<h2>Micro-level (node-level)</h2>
+<p>Micro-level network measures provide you with information about
+specific nodes in the network. These are generally known as centrality
+measures in the network science literature. Centrality is the network
+scientist’s way of quantifying the relative “importance” of a given node
+relative to other nodes in the network. There are <a
+href="http://schochastics.net/sna/periodic.html">many</a> different
+definitions of what counts as “central”, as you will see in the
+following subsections. There is no single “correct” or “best” metric -
+which metrics are most useful to you will depend on the nature of the
+system that you are modeling as well as the network behavior that you
+interested in.</p>
+<div id="degree-unweighted-edges" class="section level3">
+<h3>Degree (unweighted edges)</h3>
+<p>The <strong>degree</strong> of node <em>i</em> refers to the number
+of edges or links connected to that node.</p>
+<p>If your network has directed edges, <em>in-degree</em> refers to the
+number of edges that are going towards the target node, whereas
+<em>out-degree</em> refers to the number of edges that are going away
+from the target node.</p>
+<pre class="r"><code># undirected network
+degree(graph = g_pnet_adjmat) # for all nodes in the network</code></pre>
+<pre><code>##  xpik;apeak   biC;beach    sid;cede     iC;each   liC;leach        pi;p 
+##           2           5           4           5           5           9 
+##   p@C;patch   pis;peace   piC;peach    pik;peak    pil;peal   piz;pease 
+##           6           9          22          12           9           9 
+##    pit;peat    pin;peen    pip;peep   piv;peeve   pRC;perch   pIC;pitch 
+##           9           9           9           9           6           6 
+##   poC;poach   pWC;pouch priC;preach  pUC;putsch   riC;reach    sik;seek 
+##           6           6           2           6           6           5 
+##  slik;sleek  snik;sneak  sped;spade  spik;speak  spEk;speck   spEd;sped 
+##           3           3           3          11           5           4 
+## spiC;speech  spid;speed  spYk;spike  spok;spoke  spuk;spook   sp^d;spud 
+##           3           8           4           4           4           3 
+##  stid;steed  swid;swede   tiC;teach 
+##           3           3           5</code></pre>
+<pre class="r"><code>degree(graph = g_snet_edgelist, v = &#39;cheese&#39;) # for a specific node in the network </code></pre>
+<pre><code>## cheese 
+##    231</code></pre>
+<pre class="r"><code># directed network
+degree(graph = g_snet_adjmat, v = &#39;cheese&#39;, mode = &#39;in&#39;) # in-degree = incoming edges</code></pre>
+<pre><code>## cheese 
+##    185</code></pre>
+<pre class="r"><code>degree(graph = g_snet_adjmat, v = &#39;cheese&#39;, mode = &#39;out&#39;) # out-degree = outgoing edges </code></pre>
+<pre><code>## cheese 
+##     46</code></pre>
+<pre class="r"><code>degree(graph = g_snet_adjmat, v = &#39;cheese&#39;, mode = &#39;all&#39;) # in-degree + out-degree</code></pre>
+<pre><code>## cheese 
+##    231</code></pre>
+</div>
+<div id="strength-weighted-edges" class="section level3">
+<h3>Strength (weighted edges)</h3>
+<p>The <strong>strength</strong> of node <em>i</em> refers to the sum of
+its adjacent edge <em>weights</em>. Only applicable to weighted
+networks.</p>
+<pre class="r"><code>strength(graph = g_snet_adjmat) |&gt; head(5)</code></pre>
+<pre><code>##      age     aged     ages    aging american 
+##     0.57     0.55     0.04     0.17     0.40</code></pre>
+<pre class="r"><code># for directed networks
+strength(graph = g_snet_adjmat, v = &#39;age&#39;, mode = &#39;in&#39;) # in-degree = incoming edges</code></pre>
+<pre><code>##  age 
+## 0.38</code></pre>
+<pre class="r"><code>strength(graph = g_snet_adjmat, v = &#39;age&#39;, mode = &#39;out&#39;) # out-degree = outgoing edges </code></pre>
+<pre><code>##  age 
+## 0.19</code></pre>
+<pre class="r"><code>strength(graph = g_snet_adjmat, v = &#39;age&#39;, mode = &#39;all&#39;) # in-degree + out-degree</code></pre>
+<pre><code>##  age 
+## 0.57</code></pre>
+</div>
+<div id="local-clustering-coefficient-unweighted"
+class="section level3">
+<h3>Local Clustering Coefficient (unweighted)</h3>
+<p>The <strong>local clustering coefficient</strong>, <em>C</em>, of
+node <em>i</em> measures the ratio of the actual number of edges
+existing among nodes directly connected to the target node <em>i</em> to
+the number of all possible edges among these nodes.</p>
+<p><em>C</em> ranges from 0 to 1. When <em>C</em> = 0, none of the
+neighbors of a target node are neighbors of each other. When <em>C</em>
+= 1, every neighbor is also a neighbor of all the other neighbors of a
+target word.</p>
+<p>You can think of the local clustering coefficient as providing a
+measure of the level of interconnectivity among the local neighborhood
+of the node.</p>
+<pre class="r"><code>rbind( # use of rbind to combine node labels and their C values 
+  V(g_pnet_edgelist)$name, 
+  transitivity(graph = g_pnet_edgelist, type = &#39;local&#39;) |&gt; round(3)
+     ) </code></pre>
+<pre><code>##      [,1]        [,2]      [,3]        [,4]   [,5]        [,6]       
+## [1,] &quot;biC;beach&quot; &quot;iC;each&quot; &quot;liC;leach&quot; &quot;pi;p&quot; &quot;pis;peace&quot; &quot;piC;peach&quot;
+## [2,] &quot;1&quot;         &quot;1&quot;       &quot;1&quot;         &quot;1&quot;    &quot;1&quot;         &quot;0.268&quot;    
+##      [,7]        [,8]         [,9]       [,10]      [,11]       [,12]     
+## [1,] &quot;p@C;patch&quot; &quot;xpik;apeak&quot; &quot;pik;peak&quot; &quot;pil;peal&quot; &quot;piz;pease&quot; &quot;pit;peat&quot;
+## [2,] &quot;1&quot;         &quot;1&quot;          &quot;0.576&quot;    &quot;1&quot;        &quot;1&quot;         &quot;1&quot;       
+##      [,13]      [,14]      [,15]       [,16]       [,17]       [,18]      
+## [1,] &quot;pin;peen&quot; &quot;pip;peep&quot; &quot;piv;peeve&quot; &quot;pRC;perch&quot; &quot;pIC;pitch&quot; &quot;poC;poach&quot;
+## [2,] &quot;1&quot;        &quot;1&quot;        &quot;1&quot;         &quot;1&quot;         &quot;1&quot;         &quot;1&quot;        
+##      [,19]       [,20]         [,21]        [,22]       [,23]      [,24]     
+## [1,] &quot;pWC;pouch&quot; &quot;priC;preach&quot; &quot;pUC;putsch&quot; &quot;riC;reach&quot; &quot;sid;cede&quot; &quot;sik;seek&quot;
+## [2,] &quot;1&quot;         &quot;1&quot;           &quot;1&quot;          &quot;0.733&quot;     &quot;0.5&quot;      &quot;0.4&quot;     
+##      [,25]        [,26]        [,27]        [,28]        [,29]       
+## [1,] &quot;slik;sleek&quot; &quot;snik;sneak&quot; &quot;spik;speak&quot; &quot;spEk;speck&quot; &quot;sped;spade&quot;
+## [2,] &quot;1&quot;          &quot;1&quot;          &quot;0.218&quot;      &quot;0.6&quot;        &quot;1&quot;         
+##      [,30]       [,31]         [,32]        [,33]        [,34]       
+## [1,] &quot;spEd;sped&quot; &quot;spiC;speech&quot; &quot;spid;speed&quot; &quot;spYk;spike&quot; &quot;spok;spoke&quot;
+## [2,] &quot;0.5&quot;       &quot;0.333&quot;       &quot;0.25&quot;       &quot;1&quot;          &quot;1&quot;         
+##      [,35]        [,36]       [,37]        [,38]        [,39]      
+## [1,] &quot;spuk;spook&quot; &quot;sp^d;spud&quot; &quot;stid;steed&quot; &quot;swid;swede&quot; &quot;tiC;teach&quot;
+## [2,] &quot;1&quot;          &quot;1&quot;         &quot;1&quot;          &quot;1&quot;          &quot;1&quot;</code></pre>
+<pre class="r"><code>transitivity(graph = g_pnet_edgelist, type = &#39;local&#39;, vids = &#39;spik;speak&#39;) |&gt; round(3) # for a specific node in the network </code></pre>
+<pre><code>## [1] 0.218</code></pre>
+<p>A couple of things to note:</p>
+<ol style="list-style-type: decimal">
+<li><p>It is important to specify <code>type = local</code> for local
+clustering coefficients, as compared to the global clustering
+coefficient of the entire graph (this is a <a
+href="#global-clustering-coefficient">macro-level measure</a> that we
+will visit later)</p></li>
+<li><p>Many of these functions contain additional arguments for
+indicating whether to consider the directionality and weights of the
+edges. If your graph is undirected and unweighted, these are ignored by
+default. If your graph is directed and weighted, you can indicate
+whether to include or exclude this information for the computation of
+the network measure. There will be examples of this in the following
+subsections.</p></li>
+</ol>
+</div>
+<div id="local-clustering-coefficient-weighted" class="section level3">
+<h3>Local Clustering Coefficient (weighted)</h3>
+<p>If you have a weighted network, you can compute local clustering
+coefficients using Barrat et al.’s (2004) generalization of transitivity
+to weighted networks by specifying <code>type = 'weighted'</code>. If
+your network is unweighted, the generalization will return the
+unweighted C (see example of ‘speak’ below).</p>
+<pre class="r"><code># weighted network 
+transitivity(graph = g_snet_edgelist, type = &#39;local&#39;, vids = &#39;cheese&#39;) |&gt; round(3) </code></pre>
+<pre><code>## [1] 0.043</code></pre>
+<pre class="r"><code>transitivity(graph = g_snet_edgelist, type = &#39;weighted&#39;, vids = &#39;cheese&#39;) |&gt; round(3) </code></pre>
+<pre><code>## [1] 0.057</code></pre>
+<pre class="r"><code># unweighted network 
+transitivity(graph = g_pnet_edgelist, type = &#39;local&#39;, vids = &#39;spik;speak&#39;) |&gt; round(3)</code></pre>
+<pre><code>## [1] 0.218</code></pre>
+<pre class="r"><code>transitivity(graph = g_pnet_edgelist, type = &#39;weighted&#39;, vids = &#39;spik;speak&#39;) |&gt; round(3)</code></pre>
+<pre><code>## [1] 0.218</code></pre>
+</div>
+<div id="closeness-centrality" class="section level3">
+<h3>Closeness Centrality</h3>
+<p>Closeness centrality of node <em>i</em> is the inverse of the average
+of the length of the shortest path between node <em>i</em> and all other
+nodes in the network. If a node has high closeness centrality, it means
+that on average, it takes few steps to travel from that node to all
+other nodes in the network. If a node has low closeness centrality, it
+means that on average, it takes more steps to travel from that node to
+all other nodes in the network.</p>
+<p>Closeness centrality is commonly viewed as an indicator of the
+<em>accessibility</em> of a node in the network from all other locations
+in the network.</p>
+<pre class="r"><code># closeness centralities for directed networks, ignoring weights  
+closeness(graph = g_snet_edgelist, normalized = T, mode = &#39;all&#39;, weights = NA) |&gt; head()</code></pre>
+<pre><code>##       age      aged      ages     aging  american appetizer 
+## 0.5060241 0.5072464 0.5023923 0.5060241 0.5134474 0.5121951</code></pre>
+<pre class="r"><code>closeness(graph = g_snet_edgelist, normalized = T, mode = &#39;in&#39;, weights = NA) |&gt; head()</code></pre>
+<pre><code>##       age      aged      ages     aging  american appetizer 
+## 0.6666667 0.6666667       NaN 0.5000000 0.2790698 0.3279743</code></pre>
+<pre class="r"><code>closeness(graph = g_snet_edgelist, normalized = T, mode = &#39;out&#39;, weights = NA) |&gt; head()</code></pre>
+<pre><code>##       age      aged      ages     aging  american appetizer 
+## 0.3380282 0.3503650 0.3317422 0.3333333 0.3520408 0.3650794</code></pre>
+<pre class="r"><code># weights are considered by default if graph has a weight attribute 
+closeness(graph = g_snet_edgelist, normalized = T, mode = &#39;all&#39;) |&gt; head()</code></pre>
+<pre><code>##       age      aged      ages     aging  american appetizer 
+##  18.46966  14.54294  18.60053  18.48592  19.84877  17.90281</code></pre>
+<pre class="r"><code>closeness(graph = g_snet_edgelist, normalized = T, mode = &#39;all&#39;, weights = NULL) |&gt; head() # if weights = NULL and there is an edge attribute called weight, this will be used by default </code></pre>
+<pre><code>##       age      aged      ages     aging  american appetizer 
+##  18.46966  14.54294  18.60053  18.48592  19.84877  17.90281</code></pre>
+<p>Note that closeness centrality can only be meaningfully computed for
+connected graphs. If there are distinct network components, this means
+that for some sets of node pairs, the path between them does not exist
+and closeness cannot be computed. Usually, network scientists focus
+their analysis on the largest connected component of the network and
+ignore the smaller connected components (viewed as outliers). In the <a
+href="#Appendix:_Network_Components">Appendix</a> there is a section
+that describes how to check for the presence of network components in
+your network (i.e., not fully connected) and how to extract the
+component you want for further analysis.</p>
+<p>It is typical to have <code>normalized = T</code> so that the values
+are normalized with respect to the size of the network. As usual, you
+can specify the <code>mode</code> and <code>weights</code> arguments
+accordingly if you have directed/weighted networks to get the
+corresponding versions of closeness centrality computed. However,
+caution is needed as the interpretation of <code>weights</code> in this
+context is to interpret them as <strong>distances</strong>: higher
+weights = longer distances (From <code>igraph</code> manual: “If the
+graph has a weight edge attribute, then this is used by default. Weights
+are used for calculating weighted shortest paths, so they are
+interpreted as distances.”). It is highly recommended to read the manual
+carefully to understand the measures that are being computed.</p>
+</div>
+<div id="betweenness-centrality" class="section level3">
+<h3>Betweenness Centrality</h3>
+<p>Betweenness centrality is a measure of the degree to which nodes
+stand in between each other. A node with a high betweenness centrality
+is a node that is frequently found in the short paths of other pairs of
+nodes in the network. In contrast, a node with a low betweenness
+centrality is a node that is not usually found in the short paths of
+node pairs. Betweeenness can be viewed as an indicator if whether a node
+represents a “bottleneck” in the system.</p>
+<pre class="r"><code># undirected, unweighted network 
+betweenness(graph = g_pnet_adjmat, normalized = T, weights = NA, directed = F) |&gt; head(10)</code></pre>
+<pre><code>## xpik;apeak  biC;beach   sid;cede    iC;each  liC;leach       pi;p  p@C;patch 
+## 0.00000000 0.00000000 0.01730678 0.00000000 0.00000000 0.00000000 0.00000000 
+##  pis;peace  piC;peach   pik;peak 
+## 0.00000000 0.53840683 0.27192982</code></pre>
+<pre class="r"><code># directed, weighted network 
+betweenness(graph = g_snet_adjmat, normalized = T, weights = NULL, directed = T) |&gt; head(10)</code></pre>
+<pre><code>##          age         aged         ages        aging     american    appetizer 
+## 0.0002050581 0.0009881305 0.0000000000 0.0001367054 0.0103941672 0.0098454470 
+##      artisan    asparagus    aubergine     baguette 
+## 0.0000000000 0.0002904990 0.0000000000 0.0148101856</code></pre>
+<p>The same considerations (about connected graphs, additional arguments
+for weighted and directed graphs, normalization, interpretation of
+weights as distances) from the closeness centrality section applies to
+this section as well.</p>
+</div>
+<div id="page-rank-centrality" class="section level3">
+<h3>Page Rank Centrality</h3>
+<p>PageRank is a centrality measure developed by Google to rank webpages
+(the historic paper describing the algorithm can be viewed <a
+href="http://infolab.stanford.edu/~backrub/google.html">here</a>. The
+general idea is that a random walker will traverse the network space and
+their paths are biased by the link connectivity structure of the
+network. The random walker restarts the walk after some time
+(“boredom”). The number of visits received by a node provides an
+indicator of its importance in the network. Intuitively, we expect that
+nodes have a high PageRank if there are many nodes that point to it, or
+if there are nodes that point to it that themselves have a high
+PageRank.</p>
+<pre class="r"><code># undirected, unweighted network 
+page_rank(graph = g_pnet_edgelist, directed = F, weights = NA)$vector |&gt; head(10)</code></pre>
+<pre><code>##  biC;beach    iC;each  liC;leach       pi;p  pis;peace  piC;peach  p@C;patch 
+## 0.02109911 0.02109911 0.02109911 0.02849254 0.02849254 0.07464375 0.02307469 
+## xpik;apeak   pik;peak   pil;peal 
+## 0.01085805 0.04130385 0.02849254</code></pre>
+<pre class="r"><code># directed, weighted network 
+page_rank(graph = g_snet_edgelist, directed = T, weights = NULL)$vector |&gt; head(10)</code></pre>
+<pre><code>##          age         aged         ages        aging     american    appetizer 
+## 0.0016032147 0.0012431529 0.0007544659 0.0009711727 0.0012917020 0.0008032350 
+##      artisan    asparagus    aubergine     baguette 
+## 0.0007544659 0.0008365034 0.0011033372 0.0015875815</code></pre>
+<p>The <code>weights</code> and <code>directed</code> arguments can be
+adjusted depending on your graph type. It is important to note that the
+interpretation of edge weights here is that of “connection strength”
+(from <code>igraph</code> manual: “This function interprets edge weights
+as connection strengths. In the random surfer model, an edge with a
+larger weight is more likely to be selected by the surfer.”). This is
+different from the “distance” interpretation of edge weights by
+closeness and betweenness.</p>
+</div>
+</div>
+<div id="meso-level-community-structure" class="section level2">
+<h2>Meso-level (community structure)</h2>
+<p>A common feature of many real-world networks is that they have
+<strong>community structure</strong>. Nodes are considered to be part of
+the same community if the density of connections among those nodes is
+relatively higher than the density of connections between nodes from
+different communities (Newman, 2006).</p>
+<p><strong>Modularity, Q</strong>, is a measure of the density of links
+inside communities in relation to the density of links between
+communities (Fortunato, 2010). Networks with higher Q are said to show
+strong evidence of community structure.</p>
+<p><strong>How do network scientists “find” communities in
+networks?</strong></p>
+<p>Many community detection methods have been developed by network
+scientists to detect communities in networks. It is sort of like a
+“clustering analysis” for network scientists. Here we will go through
+four examples that reflect broad classes of community detection
+techniques. Each differs in their implementation, and reflects the
+creator’s implicit definition of what is a community.</p>
+<p>Note: In this tutorial the community detection is only implemented on
+<code>g_pnet_adjmat</code>, an undirected and unweighted network. The
+usual arguments for <code>weights</code> and <code>directed</code> are
+available in the community detection function if you wish to toggle
+these on for weighted and directed networks.</p>
+<div id="edge-betweenness-divisive-method" class="section level3">
+<h3>Edge betweenness (“divisive method”)</h3>
+<p>The core idea behind this technique is that edges connecting separate
+communities tend to have high <strong>edge betweenness</strong> as all
+the shortest paths from one community to another must traverse through
+them.</p>
+<p>The algorithm works by calculating the edge betweenness of all edges
+the graph, <em>removing</em> the edge with the highest edge betweenness
+score, then recalculating edge betweenness of remaining edges and again
+removing the one with the highest score. This repeats until modularity
+cannot be improved further.</p>
+<pre class="r"><code># run the community detection algorithm 
+results_edge &lt;- cluster_edge_betweenness(graph = g_pnet_adjmat)
+
+# overall results 
+modularity(results_edge)</code></pre>
+<pre><code>## [1] 0.5622225</code></pre>
+<pre class="r"><code>sizes(results_edge)</code></pre>
+<pre><code>## Community sizes
+##  1  2  3  4  5 
+##  9  6  8 10  6</code></pre>
+<pre class="r"><code># specific community membership for each node 
+cbind(
+  results_edge$names,
+  results_edge$membership
+) |&gt; head(5)</code></pre>
+<pre><code>##      [,1]         [,2]
+## [1,] &quot;xpik;apeak&quot; &quot;1&quot; 
+## [2,] &quot;biC;beach&quot;  &quot;2&quot; 
+## [3,] &quot;sid;cede&quot;   &quot;3&quot; 
+## [4,] &quot;iC;each&quot;    &quot;2&quot; 
+## [5,] &quot;liC;leach&quot;  &quot;2&quot;</code></pre>
+<p>Saving the community detection results as a <code>communities</code>
+object enables the use of special functions like
+<code>modularity()</code> and <code>sizes()</code> to obtain the
+modularity of the network and its community sizes. I have also included
+code that shows how to extract the community memberships of all nodes in
+the network for further analysis. This applies to the other community
+detection algorithms as well.</p>
+</div>
+<div id="louvain-method-greedy-maximization-method"
+class="section level3">
+<h3>Louvain method (“greedy, maximization method”)</h3>
+<p>The core idea behind this method is that communities are essentially
+“mergers” of small communities (Blondel et al., 2008), reflecting the
+self-similar nature of complex networks.</p>
+<ol style="list-style-type: decimal">
+<li>Each node is assigned to one community such that there are as many
+communities as there are nodes. Then remove node <em>i</em> from its
+community and placing it in the community of the neighbor which yields
+the greatest gain in modularity.</li>
+</ol>
+<ul>
+<li>repeat for all nodes in the network</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>A new network is built where nodes are the <em>communities found in
+the previous phase</em>. Repeat Step 1.</li>
+</ol>
+<ul>
+<li>repeat Step 1 and 2 until it is not possible to further increase the
+value of Q</li>
+</ul>
+<pre class="r"><code># run the community detection algorithm 
+results_louvain &lt;- cluster_louvain(graph = g_pnet_adjmat)
+
+# overall results 
+modularity(results_louvain)</code></pre>
+<pre><code>## [1] 0.5795028</code></pre>
+<pre class="r"><code>sizes(results_louvain)</code></pre>
+<pre><code>## Community sizes
+## 1 2 3 4 5 
+## 9 7 8 9 6</code></pre>
+<pre class="r"><code># specific community membership for each node 
+cbind(
+  results_louvain$names,
+  results_louvain$membership
+) |&gt; head(5)</code></pre>
+<pre><code>##      [,1]         [,2]
+## [1,] &quot;xpik;apeak&quot; &quot;1&quot; 
+## [2,] &quot;biC;beach&quot;  &quot;2&quot; 
+## [3,] &quot;sid;cede&quot;   &quot;3&quot; 
+## [4,] &quot;iC;each&quot;    &quot;2&quot; 
+## [5,] &quot;liC;leach&quot;  &quot;2&quot;</code></pre>
+</div>
+<div id="random-walker-dynamic-method" class="section level3">
+<h3>Random walker (“dynamic method”)</h3>
+<p>The core idea behind this method is that if there are communities in
+the network, a random walker will tend to spend more time inside the
+community than outside.</p>
+<p>The Walktrap algorithm groups nodes together based on the
+similarities of the paths taken by the random walker starting from that
+node. The idea is to merge sets of vertices that have low “distance”
+from each other.</p>
+<pre class="r"><code># run the community detection algorithm 
+results_walktrap &lt;- cluster_walktrap(graph = g_pnet_adjmat)
+
+# overall results 
+modularity(results_walktrap)</code></pre>
+<pre><code>## [1] 0.5608906</code></pre>
+<pre class="r"><code>sizes(results_walktrap)</code></pre>
+<pre><code>## Community sizes
+##  1  2  3  4  5 
+## 10  7 10  6  6</code></pre>
+<pre class="r"><code># specific community membership for each node 
+cbind(
+  results_walktrap$names,
+  results_walktrap$membership
+) |&gt; head(5)</code></pre>
+<pre><code>##      [,1]         [,2]
+## [1,] &quot;xpik;apeak&quot; &quot;1&quot; 
+## [2,] &quot;biC;beach&quot;  &quot;4&quot; 
+## [3,] &quot;sid;cede&quot;   &quot;2&quot; 
+## [4,] &quot;iC;each&quot;    &quot;4&quot; 
+## [5,] &quot;liC;leach&quot;  &quot;4&quot;</code></pre>
+</div>
+<div id="infomap-information-theoretic-method" class="section level3">
+<h3>Infomap (“information-theoretic method”)</h3>
+<p>The core idea behind this algorithm is to leverage on
+information-theoretic methods to “describe” the information flow of the
+entire system (based on random walks).</p>
+<p>The Infomap algorithm attempts to describe the random walker’s
+trajectory using the fewest number of “bits” of information. Communities
+are groups of nodes that receive new “names” during the compression.</p>
+<pre class="r"><code># run the community detection algorithm 
+results_infomap &lt;- cluster_infomap(graph = g_pnet_adjmat)
+
+# overall results 
+modularity(results_infomap)</code></pre>
+<pre><code>## [1] 0.5795028</code></pre>
+<pre class="r"><code>sizes(results_infomap)</code></pre>
+<pre><code>## Community sizes
+## 1 2 3 4 5 
+## 9 7 8 9 6</code></pre>
+<pre class="r"><code># specific community membership for each node 
+cbind(
+  results_infomap$names,
+  results_infomap$membership
+) |&gt; head(5)</code></pre>
+<pre><code>##      [,1]         [,2]
+## [1,] &quot;xpik;apeak&quot; &quot;1&quot; 
+## [2,] &quot;biC;beach&quot;  &quot;2&quot; 
+## [3,] &quot;sid;cede&quot;   &quot;3&quot; 
+## [4,] &quot;iC;each&quot;    &quot;2&quot; 
+## [5,] &quot;liC;leach&quot;  &quot;2&quot;</code></pre>
+</div>
+<div id="comparison-of-methods" class="section level3">
+<h3>Comparison of methods</h3>
+<p>Fortunato (2010) summarized papers that conducted a comprehensive
+comparison of community detection techniques.</p>
+<p>Generally, Rosvall &amp; Bergstorm’s Infomap and Blondel et al.’s
+greedy modularity maximization method performed the best. Both also were
+relatively fast algorithms.</p>
+<p>The code below illustrates the similarities and differences in the
+results of the various community detection methods.</p>
+<pre class="r"><code># comparing the Qs
+
+rbind(
+  c(&#39;edge_betweenness&#39;, &#39;Louvain&#39;, &#39;Walktrap&#39;, &#39;Infomap&#39;),
+  c(modularity(results_edge), modularity(results_louvain), modularity(results_walktrap), modularity(results_infomap)) |&gt; round(3)
+)</code></pre>
+<pre><code>##      [,1]               [,2]      [,3]       [,4]     
+## [1,] &quot;edge_betweenness&quot; &quot;Louvain&quot; &quot;Walktrap&quot; &quot;Infomap&quot;
+## [2,] &quot;0.562&quot;            &quot;0.58&quot;    &quot;0.561&quot;    &quot;0.58&quot;</code></pre>
+<pre class="r"><code># comparing community membership 
+
+par(mar=c(0,0,0,0)+.6, mfrow = c(2,2)) # reduce margins and plot both networks together
+
+set.seed(1)
+fixed_l &lt;- layout_with_fr(g_pnet_adjmat) # to fix node layout across plots 
+
+plot(results_edge, g_pnet_adjmat, layout = fixed_l, main = &#39;edge betweenness&#39;)
+plot(results_louvain, g_pnet_adjmat, layout = fixed_l, main = &#39;Louvain&#39;)
+plot(results_walktrap, g_pnet_adjmat, layout = fixed_l, main = &#39;Walktrap&#39;)
+plot(results_infomap, g_pnet_adjmat, layout = fixed_l, main = &#39;Infomap&#39;)</code></pre>
+<p><img src="part2-demo_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+</div>
+<div id="macro-level-network-level" class="section level2">
+<h2>Macro-level (network-level)</h2>
+<p>In this section, we will review network science measures that
+describe the overall or global structure of the entire network. You can
+think of these measures as providing a “bird’s eye view” of your
+network, and they are useful for comparing different network
+representations.</p>
+<div id="average-shortest-path-length" class="section level3">
+<h3>Average Shortest Path Length</h3>
+<p><strong>Average shortest path length</strong> (ASPL) refers to the
+mean of the shortest possible path between all possible pairs of nodes
+in the network. (This loosely corresponds to the idea of “six degrees of
+separation” in social networks.)</p>
+<pre class="r"><code># undirected, unweighted network 
+average.path.length(graph = g_pnet_adjmat, weights = NA, directed = F)</code></pre>
+<pre><code>## [1] 2.557355</code></pre>
+<pre class="r"><code>average.path.length(graph = g_pnet_adjmat) # default values for weights and directed give the same values since this is an undirected, unweighted network </code></pre>
+<pre><code>## [1] 2.557355</code></pre>
+<pre class="r"><code># an alternative function - both give the same result 
+mean_distance(graph = g_pnet_adjmat)</code></pre>
+<pre><code>## [1] 2.557355</code></pre>
+<pre class="r"><code># directed, weighted network 
+mean_distance(graph = g_snet_adjmat, weights = NULL, directed = T)</code></pre>
+<pre><code>## [1] 0.1090017</code></pre>
+<pre class="r"><code>mean_distance(graph = g_snet_adjmat, weights = NULL, directed = F) # ignore direction </code></pre>
+<pre><code>## [1] 0.06239856</code></pre>
+<pre class="r"><code>mean_distance(graph = g_snet_adjmat, weights = NA, directed = T) # ignore weights </code></pre>
+<pre><code>## [1] 2.926504</code></pre>
+</div>
+<div id="global-clustering-coefficient" class="section level3">
+<h3>Global Clustering Coefficient</h3>
+<p><strong>Global clustering coefficient</strong> refers to the number
+of closed triangles in the network relative to the number of possible
+triangles. It is a measure of overall level of <em>local</em>
+connectivity among nodes in the network.</p>
+<p>A simple way of thinking about this concept is that it is measuring
+the probability that each pair of “friends” of a given node are also
+friends with each other.</p>
+<pre class="r"><code>transitivity(graph = g_pnet_adjmat, type = &#39;global&#39;)</code></pre>
+<pre><code>## [1] 0.6805869</code></pre>
+<pre class="r"><code>transitivity(graph = g_snet_adjmat, type = &#39;global&#39;)</code></pre>
+<pre><code>## [1] 0.1588113</code></pre>
+</div>
+<div id="network-density" class="section level3">
+<h3>Network Density</h3>
+<p><strong>Network density</strong> refers to the ratio of the number of
+(existing) edges and the number of possible edges among nodes in the
+network.</p>
+<pre class="r"><code>graph.density(graph = g_pnet_adjmat)</code></pre>
+<pre><code>## [1] 0.1632928</code></pre>
+<pre class="r"><code>graph.density(graph = g_snet_adjmat)</code></pre>
+<pre><code>## [1] 0.03006093</code></pre>
+</div>
+<div id="network-diameter" class="section level3">
+<h3>Network Diameter</h3>
+<p><strong>Network diameter</strong> refers to length of the longest
+shortest path between nodes in the network. Instead of getting the mean
+of all the shortest paths as you did in ASPL, what is the
+<em>maximum</em> length of those short paths?</p>
+<pre class="r"><code># undirected, unweighted graph 
+diameter(graph = g_pnet_adjmat, directed = F, weights = NA)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>diameter(graph = g_pnet_adjmat)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code># directed, weighted graph 
+diameter(graph = g_snet_adjmat, directed = T, weights = NULL)</code></pre>
+<pre><code>## [1] 0.88</code></pre>
+<pre class="r"><code>diameter(graph = g_snet_adjmat, directed = F, weights = NULL) # ignore direction </code></pre>
+<pre><code>## [1] 0.56</code></pre>
+<pre class="r"><code>diameter(graph = g_snet_adjmat, directed = T, weights = NA) # ignore weights </code></pre>
+<pre><code>## [1] 7</code></pre>
+</div>
+</div>
+</div>
+<div id="appendix-network-visualization" class="section level1">
+<h1>Appendix: Network Visualization</h1>
+<p>The purpose of this section is to provide a gentle introduction to
+network visualization in <code>igraph</code>. Generally, it is advisable
+to only visualize small networks or a subset of a larger network; this
+is because it quickly becomes too challenging to develop a meaningful
+visual representation of a large network with many nodes and edges.</p>
+<p>For the purposes of the tutorial we will work with a randomly
+generated network <code>g</code>. The default plot does not look
+nice…</p>
+<pre class="r"><code>set.seed(5)
+g &lt;- sample_gnp(n = 20, p = 0.20) # 20 nodes with edge probability of 0.2
+plot(g)</code></pre>
+<p><img src="part2-demo_files/figure-html/default-plot-1.png" width="672" /></p>
+<div id="node-parameters" class="section level2">
+<h2>Node Parameters</h2>
+<p>This code chunk illustrates a few of the most commonly used
+node/vertex parameters in visualization.</p>
+<pre class="r"><code>par(mar=c(0,0,0,0)+.1) # reduce margins
+
+plot(g,
+     vertex.color = &#39;darkorchid1&#39;, # change color of nodes 
+     vertex.frame.color = &#39;lightgrey&#39;, # change the outline color of nodes 
+     vertex.label.dist = 1.7, # adjust distance of node label from node 
+     vertex.label.family = &#39;sans&#39;, # change font 
+     vertex.size = degree(g) # size of node corresponds to its degree 
+     )</code></pre>
+<p><img src="part2-demo_files/figure-html/node-args-1.png" width="672" /></p>
+</div>
+<div id="edge-parameters" class="section level2">
+<h2>Edge Parameters</h2>
+<p>To illustrate the edge parameters, a weighted and directed network
+<code>gw</code> is created. The code chunk below illustrates a few of
+the most commonly used edge parameters in visualization.</p>
+<pre class="r"><code>set.seed(9)
+gw &lt;- sample_gnp(n = 20, p = 0.20, directed = T) # 20 nodes with edge probability of 0.2, edges are directed
+E(gw)$weight &lt;- sample(1:5, size = gsize(gw), replace = T) # randomly add edge weights of 1 to 5 
+summary(gw) # the &#39;DW&#39; indicates a directed and weighted network </code></pre>
+<pre><code>## IGRAPH 7a14a71 D-W- 20 72 -- Erdos-Renyi (gnp) graph
+## + attr: name (g/c), type (g/c), loops (g/l), p (g/n), weight (e/n)</code></pre>
+<pre class="r"><code>par(mar=c(0,0,0,0)+.1) # reduce margins
+
+plot(gw,
+     edge.color = &#39;darkolivegreen&#39;, # color of edges 
+     edge.width = E(gw)$weight, # the width of edges corresponds to the edge weight 
+     edge.curved = 0.5, # add curvature to edges 
+     edge.arrow.width = 0.5, # adjust arrow width
+     edge.arrow.size = 0.8 # adjust arrow size 
+     )</code></pre>
+<p><img src="part2-demo_files/figure-html/edge-args-1.png" width="672" /></p>
+</div>
+<div id="network-layouts" class="section level2">
+<h2>Network Layouts</h2>
+<p>You can also adjust the overall layout of the network. These layouts
+are different network visualization approaches that use various
+algorithms to decide how nodes should be best positioned on a 2D plane,
+while considering the nature of their edge connectivity. There are many
+different layouts available - you can either check out the
+<code>igraph</code> manual or check out this online tutorial (<a
+href="https://kateto.net/network-visualization"
+class="uri">https://kateto.net/network-visualization</a>) for
+inspiration.</p>
+<pre class="r"><code>par(mar=c(0,0,0,0)+.4, mfrow = c(1,2)) # reduce margins and plot both networks together
+
+set.seed(1) 
+
+plot(g, layout = layout_in_circle, main = &#39;circle&#39;)
+plot(g, layout = layout_with_gem, main = &#39;gem&#39;)</code></pre>
+<p><img src="part2-demo_files/figure-html/layouts-1.png" width="672" /></p>
+</div>
+</div>
+<div id="appendix-network-components" class="section level1">
+<h1>Appendix: Network Components</h1>
+<p>In this section, the goal is to introduce useful R code for (i)
+detecting if your network comprises of a single connected component or
+multiple, and (ii) extracting the largest connected component of the
+network (or another network component) as a new graph object for
+additional analysis.</p>
+<div id="how-many-components-does-my-network-have"
+class="section level2">
+<h2>How many components does my network have?</h2>
+<pre class="r"><code>set.seed(88)
+gz &lt;- sample_gnp(n = 20, p = 0.10)
+plot(gz)</code></pre>
+<p><img src="part2-demo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<pre class="r"><code>gz_comp &lt;- components(gz)
+
+gz_comp$membership # component membership </code></pre>
+<pre><code>##  [1] 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1</code></pre>
+<pre class="r"><code>gz_comp$csize # component size </code></pre>
+<pre><code>## [1] 18  1  1</code></pre>
+<pre class="r"><code>gz_comp$no # number of components </code></pre>
+<pre><code>## [1] 3</code></pre>
+</div>
+<div
+id="how-can-i-extract-a-specific-network-component-as-a-new-network-object"
+class="section level2">
+<h2>How can I extract a specific network component as a new network
+object?</h2>
+<p>We can use the <code>induced_subgraph</code> function to create
+“subsets” of a network by selecting the nodes that you wish to keep.
+These nodes and all the edges among them will be retained in the new
+network object.</p>
+<pre class="r"><code># gz_comp &lt;- components(gz)
+gz_lcc &lt;- induced_subgraph(graph = gz, 
+                           vids = gz_comp$membership == which.max(gz_comp$csize) # a T/F vector indicating the nodes whose component membership is the same as the largest component - we can get this information from the components object above
+                           )
+
+plot(gz_lcc)</code></pre>
+<p><img src="part2-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r"><code># you can specify any component size you wish
+gz_hermit &lt;- induced_subgraph(graph = gz, 
+                              vids = gz_comp$membership == 3 
+                              )
+
+plot(gz_hermit)</code></pre>
+<p><img src="part2-demo_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
+</div>
+</div>
+<div id="additional-resources" class="section level1">
+<h1>Additional Resources</h1>
+<p>Ognyanova, K. (2021) Network visualization with R. Retrieved from
+www.kateto.net/network-visualization. <a
+href="https://kateto.net/network-visualization"
+class="uri">https://kateto.net/network-visualization</a></p>
+<p>The official <code>igraph</code> manual (v.1.3.4). <a
+href="https://igraph.org/r/doc/"
+class="uri">https://igraph.org/r/doc/</a></p>
+<p>Gephi: A multi-platform, free to download GUI app for network
+analysis and visualization. <a href="https://gephi.org/"
+class="uri">https://gephi.org/</a></p>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>Barrat, A., Barthélemy, M., Pastor-Satorras, R., &amp; Vespignani, A.
+(2004). The architecture of complex weighted networks. Proceedings of
+the National Academy of Sciences, 101(11), 3747–3752. <a
+href="https://doi.org/10.1073/pnas.0400087101"
+class="uri">https://doi.org/10.1073/pnas.0400087101</a></p>
+<p>Blondel, V. D., Guillaume, J. L., Lambiotte, R., &amp; Lefebvre, E.
+(2008). Fast unfolding of communities in large networks. Journal of
+Statistical Mechanics: Theory and Experiment, 2008(10), P10008.</p>
+<p>De Deyne, S., Navarro, D. J., Perfors, A., Brysbaert, M., &amp;
+Storms, G. (2019). The “Small World of Words” English word association
+norms for over 12,000 cue words. Behavior Research Methods, 51,
+987–1006.</p>
+<p>Fortunato, S. (2010). Community detection in graphs. Physics Reports,
+486(3-5), 75-174.</p>
+<p>Girvan, M., &amp; Newman, M. E. (2002). Community structure in social
+and biological networks. Proceedings of the National Academy of
+Sciences, 99(12), 7821-7826.</p>
+<p>Luce, P. A., &amp; Pisoni, D. B. (1998). Recognizing spoken words:
+The Neighborhood Activation Model. Ear and Hearing, 19(1), 1–36.</p>
+<p>Newman, M. E. (2006). Modularity and community structure in networks.
+Proceedings of the National Academy of Sciences, 103(23), 8577-8582.</p>
+<p>Pons, P., &amp; Latapy, M. (2005, October). Computing communities in
+large networks using random walks. In International symposium on
+computer and information sciences (pp. 284-293). Springer, Berlin,
+Heidelberg.</p>
+<p>Vitevitch, M. S. (2008). What can graph theory tell us about word
+learning and lexical retrieval? Journal of Speech, Language, and Hearing
+Research, 51(2), 408–422. <a
+href="https://doi.org/10.1044/1092-4388(2008/030)"
+class="uri">https://doi.org/10.1044/1092-4388(2008/030)</a></p>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiVlBGIE5ldFNjaSBUdXRvcmlhbCIKc3VidGl0bGU6ICJQYXJ0IDI6IERlbW9uc3RyYXRpb24iCmF1dGhvcjogIkN5bnRoaWEgU2lldyIKZGF0ZTogIjcvMjUvMjAyMiIKb3V0cHV0OgogIGh0bWxfZG9jdW1lbnQ6CiAgICB0b2M6IFRSVUUKICAgIHRvY19mbG9hdDogVFJVRQogICAgZGZfcHJpbnQ6IHBhZ2VkCiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCi0tLQojIFNldCB1cCAKCmBgYHtyIHNldC11cH0KbGlicmFyeShpZ3JhcGgpCgpsb2FkKCdkYXRhL2V4YW1wbGUtZGF0YS5SRGF0YScpCmBgYAoKVGhlcmUgc2hvdWxkIGJlIDQgb2JqZWN0cyBsb2FkZWQgaW50byB5b3VyIFIgd29ya3NwYWNlOgotIGBwbmV0X2VkZ2VsaXN0YAotIGBwbmV0X2Fkam1hdGAKLSBgc25ldF9lZGdlbGlzdGAKLSBgc25ldF9hZGptYXRgIAoKYHBuZXRgIHJlZmVycyB0byBhIHNlY3Rpb24gb2YgdGhlIHBob25vbG9naWNhbCBuZXR3b3JrIGZpcnN0IGRlc2NyaWJlZCBieSBWaXRldml0Y2ggKDIwMDgpLiBUaGUgbm9kZXMgcmVwcmVzZW50IEVuZ2xpc2ggd29yZHMsIGFuZCBlZGdlcyBjb25uZWN0IHdvcmRzIHRoYXQgYXJlIHBob25vbG9naWNhbCBuZWlnaGJvcnMgb2YgZWFjaCBvdGhlciBiYXNlZCBvbiB0aGUgMS1lZGl0IGRpc3RhbmNlIG1ldHJpYyBjb21wdXRlZCBvbiB0aGVpciBwaG9ub2xvZ2ljYWwgdHJhbnNjcmlwdGlvbnMgKEx1Y2UgJiBQaXNvbmksIDE5OTgpLiBFLmcuLCAva0B0Ly0tL2tAcC8gYXJlIG5laWdoYm9yaW5nIG5vZGVzLiBTcGVjaWZpY2FsbHksIHRoaXMgbmV0d29yayBpcyB0aGUgMi1ob3AgbmV0d29yayBvZiB0aGUgd29yZCAnc3BlZWNoJyAtIGluIGFkZGl0aW9uIHRvICdzcGVlY2gnIGl0c2VsZiwgaXRzIGltbWVkaWF0ZSBwaG9ub2xvZ2ljYWwgbmVpZ2hib3JzIGFuZCB0aGUgbmVpZ2hib3JzIG9mIGl0cyBuZWlnaGJvcnMgYXJlIGluY2x1ZGVkIGluIHRoaXMgcmVwcmVzZW50YXRpb24uCgpgc25ldGAgcmVmZXJzIHRvIGEgc2VjdGlvbiBvZiB0aGUgd29yZCBhc3NvY2lhdGlvbiBuZXR3b3JrIHVzaW5nIGRhdGEgZnJvbSBEZSBEZXluZSBldCBhbC4gKDIwMjApLiBUaGUgbm9kZXMgcmVwcmVzZW50IEVuZ2xpc2ggd29yZHMsIGFuZCBlZGdlcyBjb25uZWN0IHdvcmRzIHRoYXQgYXJlIHByb2R1Y2VkIGFzIGZyZWUgYXNzb2NpYXRpb25zIG9mIG90aGVyIHdvcmRzLiBFLmcuLCAiY2F0Ii0tImRvZyIgYXJlIG5laWdoYm9yaW5nIG5vZGVzLiBUaGlzIG5ldHdvcmsgaGFzIGVkZ2VzIHdpdGggMiBpbnRlcmVzdGluZyBwcm9wZXJ0aWVzLiAoaSkgRWFjaCBlZGdlIGhhcyBhIGB3ZWlnaHRgIGF0dHJpYnV0ZSB0aGF0IGNvcnJlc3BvbmRzIHRvIHRoZSBhc3NvY2lhdGl2ZSBzdHJlbmd0aCBvZiB0d28gbm9kZXMsIG9yIHRoZSBwcm9wb3J0aW9uIG9mIHBhcnRpY2lwYW50cyB3aG8gcHJvdmlkZWQgYSBzcGVjaWZpYyByZXNwb25zZSB0byB0aGUgY3VlIHdvcmQuIChpaSkgVGhlIGVkZ2VzIGFyZSBhbHNvIGBkaXJlY3RlZGAgc3VjaCB0aGUgZGlyZWN0aW9uIGdvZXMgKmZyb20qIHRoZSBjdWUgd29yZCAqdG8qIHRoZSByZXNwb25zZSB3b3JkLCBpLmUuLCAiY2F0Ii0+ImRvZyIuIFNwZWNpZmljYWxseSwgdGhpcyBuZXR3b3JrIGlzIHRoZSAxLWhvcCBuZXR3b3JrIG9mIHRoZSB3b3JkICdjaGVlc2UnIC0gaW4gYWRkaXRpb24gdG8gJ2NoZWVzZScgaXRzZWxmLCBpdHMgaW1tZWRpYXRlIGFzc29jaWF0ZXMgYW5kIHRoZSBjdWUgd29yZHMgdGhhdCBsZWQgdG8gdGhlIHJlc3BvbnNlICdjaGVlc2UnIGFyZSBpbmNsdWRlZCBpbiB0aGlzIHJlcHJlc2VudGF0aW9uLiBTZWUgYWxzbyBodHRwczovL3NtYWxsd29ybGRvZndvcmRzLm9yZy9lbi9wcm9qZWN0L3Jlc2VhcmNoIGZvciBtb3JlIGluZm9ybWF0aW9uLiAKCmBlZGdlbGlzdGAgcmVmZXJzIHRvIGEgdHlwZSBvZiBuZXR3b3JrIGRhdGEgcmVwcmVzZW50YXRpb24gd2hlcmUgZWFjaCByb3cgcmVwcmVzZW50cyBhIHNpbmdsZSBlZGdlIGluIHRoZSBuZXR3b3JrIHdpdGggYXQgbGVhc3QgMiBjb2x1bW5zIHdoZXJlIHRoZSBsYWJlbHMgb2YgY29ubmVjdGVkIG5vZGVzIGFyZSBwcm92aWRlZC4gVGhlIG51bWJlciBvZiByb3dzIGluIHRoZSBlZGdlIGxpc3QgY29ycmVzcG9uZHMgdG8gdGhlIG51bWJlciBvZiBlZGdlcyBpbiB0aGUgbmV0d29yay4gQWRkaXRpb25hbCBjb2x1bW5zIGNhbiBiZSBzcGVjaWZpZWQgdGhhdCBwcm92aWRlIG1vcmUgaW5mb3JtYXRpb24gYWJvdXQgdGhlIGVkZ2VzIChlLmcuLCB0eXBlLCB3ZWlnaHQpLiAKCmBhZGptYXRgIHJlZmVycyB0byBhIHR5cGUgb2YgbmV0d29yayBkYXRhIHJlcHJlc2VudGF0aW9uIGtub3duIGFzIGFuIGFkamFjZW5jeSBtYXRyaXggd2hlcmUgdGhlIGVkZ2UgY29ubmVjdGl2aXR5IGlzIHJlcHJlc2VudGVkIGluIHRoZSBtYXRyaXguIFRoZSBudW1iZXIgb2Ygcm93cyBhbmQgY29sdW1ucyBjb3JyZXNwb25kIHRvIHRoZSBudW1iZXIgb2Ygbm9kZXMgaW4gdGhlIG5ldHdvcmsuIEEgbm9uLXplcm8gdmFsdWUgaW4gdGhlIFtpLGpdIGVsZW1lbnQgb2YgdGhlIGFkamFjZW5jeSBtYXRyaXggaW5kaWNhdGVzIHRoZSBwcmVzZW5jZSBvZiBhIGxpbmsgYmV0d2VlbiBub2RlICppKiBhbmQgbm9kZSAqaiouIAoKYGBge3IgcHJldmlld30KaGVhZChwbmV0X2VkZ2VsaXN0LCAzKQoKaGVhZChzbmV0X2VkZ2VsaXN0LCAzKQoKIyBwbmV0X2Fkam1hdFsxOjUsIDE6NV0gCgojIHNuZXRfYWRqbWF0WzE6NSwgMTo1XQpgYGAKCiMgQ3JlYXRpbmcgYSBuZXR3b3JrIGZyb20geW91ciBkYXRhIAoKIyMgRXhhbXBsZSAxOiBQaG9ub2xvZ2ljYWwgbmV0d29yayB3aXRoICp1bmRpcmVjdGVkKiBhbmQgKnVud2VpZ2h0ZWQqIGVkZ2VzIAoKIyMjIEZyb20gYW4gYWRqYWNlbmN5IG1hdHJpeCAKCmBgYHtyIHBuZXQtYWRqbWF0fQpnX3BuZXRfYWRqbWF0IDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeCgKICBhZGptYXRyaXggPSBwbmV0X2Fkam1hdCwgCiAgbW9kZSA9ICd1bmRpcmVjdGVkJywgCiAgd2VpZ2h0ZWQgPSBOVUxMCiAgKQoKc3VtbWFyeShnX3BuZXRfYWRqbWF0KQpgYGAKCiMjIyBGcm9tIGFuIGVkZ2UgbGlzdCAKCmBgYHtyIHBuZXQtZWRnZWxpc3R9CmdfcG5ldF9lZGdlbGlzdCA8LSBncmFwaF9mcm9tX2VkZ2VsaXN0KAogIGVsID0gcG5ldF9lZGdlbGlzdCwgCiAgZGlyZWN0ZWQgPSBGQUxTRQogICkKCnN1bW1hcnkoZ19wbmV0X2VkZ2VsaXN0KQpgYGAKCiMjIEV4YW1wbGUgMjogU2VtYW50aWMgbmV0d29yayB3aXRoICpkaXJlY3RlZCogYW5kICp3ZWlnaHRlZCogZWRnZXMgCgojIyMgRnJvbSBhbiBhZGphY2VuY3kgbWF0cml4IAoKYGBge3Igc25ldC1hZGptYXR9Cmdfc25ldF9hZGptYXQgPC0gZ3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KAogIGFkam1hdHJpeCA9IHNuZXRfYWRqbWF0LCAKICBtb2RlID0gJ2RpcmVjdGVkJywgCiAgd2VpZ2h0ZWQgPSAnd2VpZ2h0JwogICkKCnN1bW1hcnkoZ19zbmV0X2Fkam1hdCkKYGBgCgpOb3RlIHRoYXQgdGhlIGRpcmVjdGlvbiBvZiBlZGdlcyBpbiBkaXJlY3RlZCBuZXR3b3JrcyBmb2xsb3dzIHRoaXMgY29udmVudGlvbjogJ0Zyb20nID0gcm93czsgJ1RvJyA9IGNvbHVtbnMgCgpIZXJlIGlzIGFuIGV4YW1wbGU6IAoKYGBge3J9CnNuZXRfYWRqbWF0WzE6NSwgMTo1XSAjIGZyb20gJ2FnZScgdG8gJ2FnaW5nJwoKRShnX3NuZXRfYWRqbWF0KSB8PiBoZWFkKCkgIyAnfD4nIHBpcGVzIG91dHB1dCBmcm9tIG9uZSBmdW5jdGlvbiBpbnRvIGFub3RoZXIgCmBgYAoKIyMjIEZyb20gYW4gZWRnZSBsaXN0IAoKYGBge3Igc25ldC1lZGdlbGlzdH0KZ19zbmV0X2VkZ2VsaXN0IDwtIGdyYXBoX2Zyb21fZGF0YV9mcmFtZSgKICBkID0gc25ldF9lZGdlbGlzdCwgCiAgZGlyZWN0ZWQgPSBUUlVFLCAKICB2ZXJ0aWNlcyA9IE5VTEwKICApCgpzdW1tYXJ5KGdfc25ldF9lZGdlbGlzdCkKYGBgCgpUaGUgY29sdW1uIGNvbnRhaW5pbmcgdGhlIGVkZ2Ugd2VpZ2h0cyBtdXN0IGJlIGxhYmVsbGVkICd3ZWlnaHQnIGluIHRoZSBkYXRhIGZyYW1lLiBOb3RlIHRoYXQgd2UgdXNlZCB0aGUgYGdyYXBoX2Zyb21fZGF0YV9mcmFtZWAgZnVuY3Rpb24gaGVyZSBpbnN0ZWFkIG9mIHRoZSBgZ3JhcGhfZnJvbV9lZGdlbGlzdGAgZnVuY3Rpb24sIGFzIHRoZSBsYXR0ZXIgZG9lcyBub3QgaGF2ZSBhbiBhcmd1bWVudCB0byBzcGVjaWZ5IHRoZSBlZGdlIHdlaWdodHMuICAKCiMgTWVhc3VyaW5nIHRoZSBuZXR3b3JrIAoKT25jZSB3ZSBoYXZlIGEgbmV0d29yayByZXByZXNlbnRhdGlvbiwgdGhlIHRvb2xzIG9mIG5ldHdvcmsgc2NpZW5jZSBjYW4gYmUgYXBwbGllZCB0byBhbmFseXplIHRoZSBuZXR3b3JrcyBpbiBkaWZmZXJlbnQgd2F5cy4gSW4gdGhpcyB0dXRvcmlhbCB3ZSBmb2N1cyBvbiBhICpkZXNjcmlwdGl2ZSogYW5hbHlzaXMgb2YgdGhlIG5ldHdvcmsgYW5kIHJldmlldyB2YXJpb3VzIG5ldHdvcmsgbWVhc3VyZXMgdGhhdCBjYW4gYmUgdXNlZCB0byBkZXNjcmliZSBvciBxdWFudGlmeSBuZXR3b3JrIHN0cnVjdHVyZSBhdCB0aHJlZSBkaWZmZXJlbnQgbGV2ZWxzIG9mIHRoZSBuZXR3b3JrOiB0aGUgbWljcm8tbGV2ZWwgKHJlZmVycmluZyB0byB0aGUgbG9jYWwgc3RydWN0dXJlIGFuZCBvdGhlciBwcm9wZXJ0aWVzIG9mIGluZGl2aWR1YWwgbm9kZXMpLCB0aGUgbWVzby1sZXZlbCAoc3ViZ3JvdXBzIG9yIGNsdXN0ZXJzIG9mIG5vZGVzKSwgYW5kIHRoZSBtYWNyby1sZXZlbCAocmVmZXJyaW5nIHRvIHRoZSBvdmVyYWxsIG9yIGdsb2JhbCBzdHJ1Y3R1cmUgb2YgdGhlIG5ldHdvcmspLiAKCiMjIE1pY3JvLWxldmVsIChub2RlLWxldmVsKQoKTWljcm8tbGV2ZWwgbmV0d29yayBtZWFzdXJlcyBwcm92aWRlIHlvdSB3aXRoIGluZm9ybWF0aW9uIGFib3V0IHNwZWNpZmljIG5vZGVzIGluIHRoZSBuZXR3b3JrLiBUaGVzZSBhcmUgZ2VuZXJhbGx5IGtub3duIGFzIGNlbnRyYWxpdHkgbWVhc3VyZXMgaW4gdGhlIG5ldHdvcmsgc2NpZW5jZSBsaXRlcmF0dXJlLiBDZW50cmFsaXR5IGlzIHRoZSBuZXR3b3JrIHNjaWVudGlzdCdzIHdheSBvZiBxdWFudGlmeWluZyB0aGUgcmVsYXRpdmUgImltcG9ydGFuY2UiIG9mIGEgZ2l2ZW4gbm9kZSByZWxhdGl2ZSB0byBvdGhlciBub2RlcyBpbiB0aGUgbmV0d29yay4gVGhlcmUgYXJlIFttYW55XShodHRwOi8vc2Nob2NoYXN0aWNzLm5ldC9zbmEvcGVyaW9kaWMuaHRtbCkgZGlmZmVyZW50IGRlZmluaXRpb25zIG9mIHdoYXQgY291bnRzIGFzICJjZW50cmFsIiwgYXMgeW91IHdpbGwgc2VlIGluIHRoZSBmb2xsb3dpbmcgc3Vic2VjdGlvbnMuIFRoZXJlIGlzIG5vIHNpbmdsZSAiY29ycmVjdCIgb3IgImJlc3QiIG1ldHJpYyAtIHdoaWNoIG1ldHJpY3MgYXJlIG1vc3QgdXNlZnVsIHRvIHlvdSB3aWxsIGRlcGVuZCBvbiB0aGUgbmF0dXJlIG9mIHRoZSBzeXN0ZW0gdGhhdCB5b3UgYXJlIG1vZGVsaW5nIGFzIHdlbGwgYXMgdGhlIG5ldHdvcmsgYmVoYXZpb3IgdGhhdCB5b3UgaW50ZXJlc3RlZCBpbi4gCgojIyMgRGVncmVlICh1bndlaWdodGVkIGVkZ2VzKQoKVGhlICoqZGVncmVlKiogb2Ygbm9kZSAqaSogcmVmZXJzIHRvIHRoZSBudW1iZXIgb2YgZWRnZXMgb3IgbGlua3MgY29ubmVjdGVkIHRvIHRoYXQgbm9kZS4KCklmIHlvdXIgbmV0d29yayBoYXMgZGlyZWN0ZWQgZWRnZXMsICppbi1kZWdyZWUqIHJlZmVycyB0byB0aGUgbnVtYmVyIG9mIGVkZ2VzIHRoYXQgYXJlIGdvaW5nIHRvd2FyZHMgdGhlIHRhcmdldCBub2RlLCB3aGVyZWFzICpvdXQtZGVncmVlKiByZWZlcnMgdG8gdGhlIG51bWJlciBvZiBlZGdlcyB0aGF0IGFyZSBnb2luZyBhd2F5IGZyb20gdGhlIHRhcmdldCBub2RlLiAKCmBgYHtyfQojIHVuZGlyZWN0ZWQgbmV0d29yawpkZWdyZWUoZ3JhcGggPSBnX3BuZXRfYWRqbWF0KSAjIGZvciBhbGwgbm9kZXMgaW4gdGhlIG5ldHdvcmsKCmRlZ3JlZShncmFwaCA9IGdfc25ldF9lZGdlbGlzdCwgdiA9ICdjaGVlc2UnKSAjIGZvciBhIHNwZWNpZmljIG5vZGUgaW4gdGhlIG5ldHdvcmsgCgojIGRpcmVjdGVkIG5ldHdvcmsKZGVncmVlKGdyYXBoID0gZ19zbmV0X2Fkam1hdCwgdiA9ICdjaGVlc2UnLCBtb2RlID0gJ2luJykgIyBpbi1kZWdyZWUgPSBpbmNvbWluZyBlZGdlcwpkZWdyZWUoZ3JhcGggPSBnX3NuZXRfYWRqbWF0LCB2ID0gJ2NoZWVzZScsIG1vZGUgPSAnb3V0JykgIyBvdXQtZGVncmVlID0gb3V0Z29pbmcgZWRnZXMgCmRlZ3JlZShncmFwaCA9IGdfc25ldF9hZGptYXQsIHYgPSAnY2hlZXNlJywgbW9kZSA9ICdhbGwnKSAjIGluLWRlZ3JlZSArIG91dC1kZWdyZWUKYGBgCgojIyMgU3RyZW5ndGggKHdlaWdodGVkIGVkZ2VzKQoKVGhlICoqc3RyZW5ndGgqKiBvZiBub2RlICppKiByZWZlcnMgdG8gdGhlIHN1bSBvZiBpdHMgYWRqYWNlbnQgZWRnZSAqd2VpZ2h0cyouIE9ubHkgYXBwbGljYWJsZSB0byB3ZWlnaHRlZCBuZXR3b3Jrcy4gCgpgYGB7cn0Kc3RyZW5ndGgoZ3JhcGggPSBnX3NuZXRfYWRqbWF0KSB8PiBoZWFkKDUpCgojIGZvciBkaXJlY3RlZCBuZXR3b3JrcwpzdHJlbmd0aChncmFwaCA9IGdfc25ldF9hZGptYXQsIHYgPSAnYWdlJywgbW9kZSA9ICdpbicpICMgaW4tZGVncmVlID0gaW5jb21pbmcgZWRnZXMKc3RyZW5ndGgoZ3JhcGggPSBnX3NuZXRfYWRqbWF0LCB2ID0gJ2FnZScsIG1vZGUgPSAnb3V0JykgIyBvdXQtZGVncmVlID0gb3V0Z29pbmcgZWRnZXMgCnN0cmVuZ3RoKGdyYXBoID0gZ19zbmV0X2Fkam1hdCwgdiA9ICdhZ2UnLCBtb2RlID0gJ2FsbCcpICMgaW4tZGVncmVlICsgb3V0LWRlZ3JlZQpgYGAKCiMjIyBMb2NhbCBDbHVzdGVyaW5nIENvZWZmaWNpZW50ICh1bndlaWdodGVkKQoKVGhlICoqbG9jYWwgY2x1c3RlcmluZyBjb2VmZmljaWVudCoqLCAqQyosIG9mIG5vZGUgKmkqIG1lYXN1cmVzIHRoZSByYXRpbyBvZiB0aGUgYWN0dWFsIG51bWJlciBvZiBlZGdlcyBleGlzdGluZyBhbW9uZyBub2RlcyBkaXJlY3RseSBjb25uZWN0ZWQgdG8gdGhlIHRhcmdldCBub2RlICppKiB0byB0aGUgbnVtYmVyIG9mIGFsbCBwb3NzaWJsZSBlZGdlcyBhbW9uZyB0aGVzZSBub2Rlcy4gCgoqQyogcmFuZ2VzIGZyb20gMCB0byAxLiBXaGVuICpDKiA9IDAsIG5vbmUgb2YgdGhlIG5laWdoYm9ycyBvZiBhIHRhcmdldCBub2RlIGFyZSBuZWlnaGJvcnMgb2YgZWFjaCBvdGhlci4gV2hlbiAqQyogPSAxLCBldmVyeSBuZWlnaGJvciBpcyBhbHNvIGEgbmVpZ2hib3Igb2YgYWxsIHRoZSBvdGhlciBuZWlnaGJvcnMgb2YgYSB0YXJnZXQgd29yZC4KCllvdSBjYW4gdGhpbmsgb2YgdGhlIGxvY2FsIGNsdXN0ZXJpbmcgY29lZmZpY2llbnQgYXMgcHJvdmlkaW5nIGEgbWVhc3VyZSBvZiB0aGUgbGV2ZWwgb2YgaW50ZXJjb25uZWN0aXZpdHkgYW1vbmcgdGhlIGxvY2FsIG5laWdoYm9yaG9vZCBvZiB0aGUgbm9kZS4gCgpgYGB7cn0KcmJpbmQoICMgdXNlIG9mIHJiaW5kIHRvIGNvbWJpbmUgbm9kZSBsYWJlbHMgYW5kIHRoZWlyIEMgdmFsdWVzIAogIFYoZ19wbmV0X2VkZ2VsaXN0KSRuYW1lLCAKICB0cmFuc2l0aXZpdHkoZ3JhcGggPSBnX3BuZXRfZWRnZWxpc3QsIHR5cGUgPSAnbG9jYWwnKSB8PiByb3VuZCgzKQogICAgICkgCgp0cmFuc2l0aXZpdHkoZ3JhcGggPSBnX3BuZXRfZWRnZWxpc3QsIHR5cGUgPSAnbG9jYWwnLCB2aWRzID0gJ3NwaWs7c3BlYWsnKSB8PiByb3VuZCgzKSAjIGZvciBhIHNwZWNpZmljIG5vZGUgaW4gdGhlIG5ldHdvcmsgCmBgYAoKQSBjb3VwbGUgb2YgdGhpbmdzIHRvIG5vdGU6CgoxLiBJdCBpcyBpbXBvcnRhbnQgdG8gc3BlY2lmeSBgdHlwZSA9IGxvY2FsYCBmb3IgbG9jYWwgY2x1c3RlcmluZyBjb2VmZmljaWVudHMsIGFzIGNvbXBhcmVkIHRvIHRoZSBnbG9iYWwgY2x1c3RlcmluZyBjb2VmZmljaWVudCBvZiB0aGUgZW50aXJlIGdyYXBoICh0aGlzIGlzIGEgW21hY3JvLWxldmVsIG1lYXN1cmVdKCNnbG9iYWwtY2x1c3RlcmluZy1jb2VmZmljaWVudCkgdGhhdCB3ZSB3aWxsIHZpc2l0IGxhdGVyKSAKCjIuIE1hbnkgb2YgdGhlc2UgZnVuY3Rpb25zIGNvbnRhaW4gYWRkaXRpb25hbCBhcmd1bWVudHMgZm9yIGluZGljYXRpbmcgd2hldGhlciB0byBjb25zaWRlciB0aGUgZGlyZWN0aW9uYWxpdHkgYW5kIHdlaWdodHMgb2YgdGhlIGVkZ2VzLiBJZiB5b3VyIGdyYXBoIGlzIHVuZGlyZWN0ZWQgYW5kIHVud2VpZ2h0ZWQsIHRoZXNlIGFyZSBpZ25vcmVkIGJ5IGRlZmF1bHQuIElmIHlvdXIgZ3JhcGggaXMgZGlyZWN0ZWQgYW5kIHdlaWdodGVkLCB5b3UgY2FuIGluZGljYXRlIHdoZXRoZXIgdG8gaW5jbHVkZSBvciBleGNsdWRlIHRoaXMgaW5mb3JtYXRpb24gZm9yIHRoZSBjb21wdXRhdGlvbiBvZiB0aGUgbmV0d29yayBtZWFzdXJlLiBUaGVyZSB3aWxsIGJlIGV4YW1wbGVzIG9mIHRoaXMgaW4gdGhlIGZvbGxvd2luZyBzdWJzZWN0aW9ucy4gCgojIyMgTG9jYWwgQ2x1c3RlcmluZyBDb2VmZmljaWVudCAod2VpZ2h0ZWQpCgpJZiB5b3UgaGF2ZSBhIHdlaWdodGVkIG5ldHdvcmssIHlvdSBjYW4gY29tcHV0ZSBsb2NhbCBjbHVzdGVyaW5nIGNvZWZmaWNpZW50cyB1c2luZyBCYXJyYXQgZXQgYWwuJ3MgKDIwMDQpIGdlbmVyYWxpemF0aW9uIG9mIHRyYW5zaXRpdml0eSB0byB3ZWlnaHRlZCBuZXR3b3JrcyBieSBzcGVjaWZ5aW5nIGB0eXBlID0gJ3dlaWdodGVkJ2AuIElmIHlvdXIgbmV0d29yayBpcyB1bndlaWdodGVkLCB0aGUgZ2VuZXJhbGl6YXRpb24gd2lsbCByZXR1cm4gdGhlIHVud2VpZ2h0ZWQgQyAoc2VlIGV4YW1wbGUgb2YgJ3NwZWFrJyBiZWxvdykuIAoKYGBge3J9CiMgd2VpZ2h0ZWQgbmV0d29yayAKdHJhbnNpdGl2aXR5KGdyYXBoID0gZ19zbmV0X2VkZ2VsaXN0LCB0eXBlID0gJ2xvY2FsJywgdmlkcyA9ICdjaGVlc2UnKSB8PiByb3VuZCgzKSAKCnRyYW5zaXRpdml0eShncmFwaCA9IGdfc25ldF9lZGdlbGlzdCwgdHlwZSA9ICd3ZWlnaHRlZCcsIHZpZHMgPSAnY2hlZXNlJykgfD4gcm91bmQoMykgCgojIHVud2VpZ2h0ZWQgbmV0d29yayAKdHJhbnNpdGl2aXR5KGdyYXBoID0gZ19wbmV0X2VkZ2VsaXN0LCB0eXBlID0gJ2xvY2FsJywgdmlkcyA9ICdzcGlrO3NwZWFrJykgfD4gcm91bmQoMykKCnRyYW5zaXRpdml0eShncmFwaCA9IGdfcG5ldF9lZGdlbGlzdCwgdHlwZSA9ICd3ZWlnaHRlZCcsIHZpZHMgPSAnc3BpaztzcGVhaycpIHw+IHJvdW5kKDMpCmBgYAoKIyMjIENsb3NlbmVzcyBDZW50cmFsaXR5IAoKQ2xvc2VuZXNzIGNlbnRyYWxpdHkgb2Ygbm9kZSAqaSogaXMgdGhlIGludmVyc2Ugb2YgdGhlIGF2ZXJhZ2Ugb2YgdGhlIGxlbmd0aCBvZiB0aGUgc2hvcnRlc3QgcGF0aCBiZXR3ZWVuIG5vZGUgKmkqIGFuZCBhbGwgb3RoZXIgbm9kZXMgaW4gdGhlIG5ldHdvcmsuIElmIGEgbm9kZSBoYXMgaGlnaCBjbG9zZW5lc3MgY2VudHJhbGl0eSwgaXQgbWVhbnMgdGhhdCBvbiBhdmVyYWdlLCBpdCB0YWtlcyBmZXcgc3RlcHMgdG8gdHJhdmVsIGZyb20gdGhhdCBub2RlIHRvIGFsbCBvdGhlciBub2RlcyBpbiB0aGUgbmV0d29yay4gSWYgYSBub2RlIGhhcyBsb3cgY2xvc2VuZXNzIGNlbnRyYWxpdHksIGl0IG1lYW5zIHRoYXQgb24gYXZlcmFnZSwgaXQgdGFrZXMgbW9yZSBzdGVwcyB0byB0cmF2ZWwgZnJvbSB0aGF0IG5vZGUgdG8gYWxsIG90aGVyIG5vZGVzIGluIHRoZSBuZXR3b3JrLgoKQ2xvc2VuZXNzIGNlbnRyYWxpdHkgaXMgY29tbW9ubHkgdmlld2VkIGFzIGFuIGluZGljYXRvciBvZiB0aGUgKmFjY2Vzc2liaWxpdHkqIG9mIGEgbm9kZSBpbiB0aGUgbmV0d29yayBmcm9tIGFsbCBvdGhlciBsb2NhdGlvbnMgaW4gdGhlIG5ldHdvcmsuIAoKYGBge3J9CiMgY2xvc2VuZXNzIGNlbnRyYWxpdGllcyBmb3IgZGlyZWN0ZWQgbmV0d29ya3MsIGlnbm9yaW5nIHdlaWdodHMgIApjbG9zZW5lc3MoZ3JhcGggPSBnX3NuZXRfZWRnZWxpc3QsIG5vcm1hbGl6ZWQgPSBULCBtb2RlID0gJ2FsbCcsIHdlaWdodHMgPSBOQSkgfD4gaGVhZCgpCmNsb3NlbmVzcyhncmFwaCA9IGdfc25ldF9lZGdlbGlzdCwgbm9ybWFsaXplZCA9IFQsIG1vZGUgPSAnaW4nLCB3ZWlnaHRzID0gTkEpIHw+IGhlYWQoKQpjbG9zZW5lc3MoZ3JhcGggPSBnX3NuZXRfZWRnZWxpc3QsIG5vcm1hbGl6ZWQgPSBULCBtb2RlID0gJ291dCcsIHdlaWdodHMgPSBOQSkgfD4gaGVhZCgpCgojIHdlaWdodHMgYXJlIGNvbnNpZGVyZWQgYnkgZGVmYXVsdCBpZiBncmFwaCBoYXMgYSB3ZWlnaHQgYXR0cmlidXRlIApjbG9zZW5lc3MoZ3JhcGggPSBnX3NuZXRfZWRnZWxpc3QsIG5vcm1hbGl6ZWQgPSBULCBtb2RlID0gJ2FsbCcpIHw+IGhlYWQoKQpjbG9zZW5lc3MoZ3JhcGggPSBnX3NuZXRfZWRnZWxpc3QsIG5vcm1hbGl6ZWQgPSBULCBtb2RlID0gJ2FsbCcsIHdlaWdodHMgPSBOVUxMKSB8PiBoZWFkKCkgIyBpZiB3ZWlnaHRzID0gTlVMTCBhbmQgdGhlcmUgaXMgYW4gZWRnZSBhdHRyaWJ1dGUgY2FsbGVkIHdlaWdodCwgdGhpcyB3aWxsIGJlIHVzZWQgYnkgZGVmYXVsdCAKYGBgCgpOb3RlIHRoYXQgY2xvc2VuZXNzIGNlbnRyYWxpdHkgY2FuIG9ubHkgYmUgbWVhbmluZ2Z1bGx5IGNvbXB1dGVkIGZvciBjb25uZWN0ZWQgZ3JhcGhzLiBJZiB0aGVyZSBhcmUgZGlzdGluY3QgbmV0d29yayBjb21wb25lbnRzLCB0aGlzIG1lYW5zIHRoYXQgZm9yIHNvbWUgc2V0cyBvZiBub2RlIHBhaXJzLCB0aGUgcGF0aCBiZXR3ZWVuIHRoZW0gZG9lcyBub3QgZXhpc3QgYW5kIGNsb3NlbmVzcyBjYW5ub3QgYmUgY29tcHV0ZWQuIFVzdWFsbHksIG5ldHdvcmsgc2NpZW50aXN0cyBmb2N1cyB0aGVpciBhbmFseXNpcyBvbiB0aGUgbGFyZ2VzdCBjb25uZWN0ZWQgY29tcG9uZW50IG9mIHRoZSBuZXR3b3JrIGFuZCBpZ25vcmUgdGhlIHNtYWxsZXIgY29ubmVjdGVkIGNvbXBvbmVudHMgKHZpZXdlZCBhcyBvdXRsaWVycykuIEluIHRoZSBbQXBwZW5kaXhdKCNBcHBlbmRpeDpfTmV0d29ya19Db21wb25lbnRzKSB0aGVyZSBpcyBhIHNlY3Rpb24gdGhhdCBkZXNjcmliZXMgaG93IHRvIGNoZWNrIGZvciB0aGUgcHJlc2VuY2Ugb2YgbmV0d29yayBjb21wb25lbnRzIGluIHlvdXIgbmV0d29yayAoaS5lLiwgbm90IGZ1bGx5IGNvbm5lY3RlZCkgYW5kIGhvdyB0byBleHRyYWN0IHRoZSBjb21wb25lbnQgeW91IHdhbnQgZm9yIGZ1cnRoZXIgYW5hbHlzaXMuIAoKSXQgaXMgdHlwaWNhbCB0byBoYXZlIGBub3JtYWxpemVkID0gVGAgc28gdGhhdCB0aGUgdmFsdWVzIGFyZSBub3JtYWxpemVkIHdpdGggcmVzcGVjdCB0byB0aGUgc2l6ZSBvZiB0aGUgbmV0d29yay4gQXMgdXN1YWwsIHlvdSBjYW4gc3BlY2lmeSB0aGUgYG1vZGVgIGFuZCBgd2VpZ2h0c2AgYXJndW1lbnRzIGFjY29yZGluZ2x5IGlmIHlvdSBoYXZlIGRpcmVjdGVkL3dlaWdodGVkIG5ldHdvcmtzIHRvIGdldCB0aGUgY29ycmVzcG9uZGluZyB2ZXJzaW9ucyBvZiBjbG9zZW5lc3MgY2VudHJhbGl0eSBjb21wdXRlZC4gSG93ZXZlciwgY2F1dGlvbiBpcyBuZWVkZWQgYXMgdGhlIGludGVycHJldGF0aW9uIG9mIGB3ZWlnaHRzYCBpbiB0aGlzIGNvbnRleHQgaXMgdG8gaW50ZXJwcmV0IHRoZW0gYXMgKipkaXN0YW5jZXMqKjogaGlnaGVyIHdlaWdodHMgPSBsb25nZXIgZGlzdGFuY2VzIChGcm9tIGBpZ3JhcGhgIG1hbnVhbDogIklmIHRoZSBncmFwaCBoYXMgYSB3ZWlnaHQgZWRnZSBhdHRyaWJ1dGUsIHRoZW4gdGhpcyBpcyB1c2VkIGJ5IGRlZmF1bHQuIFdlaWdodHMgYXJlIHVzZWQgZm9yIGNhbGN1bGF0aW5nIHdlaWdodGVkIHNob3J0ZXN0IHBhdGhzLCBzbyB0aGV5IGFyZSBpbnRlcnByZXRlZCBhcyBkaXN0YW5jZXMuIikuIEl0IGlzIGhpZ2hseSByZWNvbW1lbmRlZCB0byByZWFkIHRoZSBtYW51YWwgY2FyZWZ1bGx5IHRvIHVuZGVyc3RhbmQgdGhlIG1lYXN1cmVzIHRoYXQgYXJlIGJlaW5nIGNvbXB1dGVkLiAKCiMjIyBCZXR3ZWVubmVzcyBDZW50cmFsaXR5IAoKQmV0d2Vlbm5lc3MgY2VudHJhbGl0eSBpcyBhIG1lYXN1cmUgb2YgdGhlIGRlZ3JlZSB0byB3aGljaCBub2RlcyBzdGFuZCBpbiBiZXR3ZWVuIGVhY2ggb3RoZXIuIEEgbm9kZSB3aXRoIGEgaGlnaCBiZXR3ZWVubmVzcyBjZW50cmFsaXR5IGlzIGEgbm9kZSB0aGF0IGlzIGZyZXF1ZW50bHkgZm91bmQgaW4gdGhlIHNob3J0IHBhdGhzIG9mIG90aGVyIHBhaXJzIG9mIG5vZGVzIGluIHRoZSBuZXR3b3JrLiBJbiBjb250cmFzdCwgYSBub2RlIHdpdGggYSBsb3cgYmV0d2Vlbm5lc3MgY2VudHJhbGl0eSBpcyBhIG5vZGUgdGhhdCBpcyBub3QgdXN1YWxseSBmb3VuZCBpbiB0aGUgc2hvcnQgcGF0aHMgb2Ygbm9kZSBwYWlycy4gQmV0d2VlZW5uZXNzIGNhbiBiZSB2aWV3ZWQgYXMgYW4gaW5kaWNhdG9yIGlmIHdoZXRoZXIgYSBub2RlIHJlcHJlc2VudHMgYSAiYm90dGxlbmVjayIgaW4gdGhlIHN5c3RlbS4gCgpgYGB7cn0KIyB1bmRpcmVjdGVkLCB1bndlaWdodGVkIG5ldHdvcmsgCmJldHdlZW5uZXNzKGdyYXBoID0gZ19wbmV0X2Fkam1hdCwgbm9ybWFsaXplZCA9IFQsIHdlaWdodHMgPSBOQSwgZGlyZWN0ZWQgPSBGKSB8PiBoZWFkKDEwKQoKIyBkaXJlY3RlZCwgd2VpZ2h0ZWQgbmV0d29yayAKYmV0d2Vlbm5lc3MoZ3JhcGggPSBnX3NuZXRfYWRqbWF0LCBub3JtYWxpemVkID0gVCwgd2VpZ2h0cyA9IE5VTEwsIGRpcmVjdGVkID0gVCkgfD4gaGVhZCgxMCkKYGBgCgpUaGUgc2FtZSBjb25zaWRlcmF0aW9ucyAoYWJvdXQgY29ubmVjdGVkIGdyYXBocywgYWRkaXRpb25hbCBhcmd1bWVudHMgZm9yIHdlaWdodGVkIGFuZCBkaXJlY3RlZCBncmFwaHMsIG5vcm1hbGl6YXRpb24sIGludGVycHJldGF0aW9uIG9mIHdlaWdodHMgYXMgZGlzdGFuY2VzKSBmcm9tIHRoZSBjbG9zZW5lc3MgY2VudHJhbGl0eSBzZWN0aW9uIGFwcGxpZXMgdG8gdGhpcyBzZWN0aW9uIGFzIHdlbGwuIAoKIyMjIFBhZ2UgUmFuayBDZW50cmFsaXR5CgpQYWdlUmFuayBpcyBhIGNlbnRyYWxpdHkgbWVhc3VyZSBkZXZlbG9wZWQgYnkgR29vZ2xlIHRvIHJhbmsgd2VicGFnZXMgKHRoZSBoaXN0b3JpYyBwYXBlciBkZXNjcmliaW5nIHRoZSBhbGdvcml0aG0gY2FuIGJlIHZpZXdlZCBbaGVyZV0oaHR0cDovL2luZm9sYWIuc3RhbmZvcmQuZWR1L35iYWNrcnViL2dvb2dsZS5odG1sKS4gVGhlIGdlbmVyYWwgaWRlYSBpcyB0aGF0IGEgcmFuZG9tIHdhbGtlciB3aWxsIHRyYXZlcnNlIHRoZSBuZXR3b3JrIHNwYWNlIGFuZCB0aGVpciBwYXRocyBhcmUgYmlhc2VkIGJ5IHRoZSBsaW5rIGNvbm5lY3Rpdml0eSBzdHJ1Y3R1cmUgb2YgdGhlIG5ldHdvcmsuIFRoZSByYW5kb20gd2Fsa2VyIHJlc3RhcnRzIHRoZSB3YWxrIGFmdGVyIHNvbWUgdGltZSAoImJvcmVkb20iKS4gVGhlIG51bWJlciBvZiB2aXNpdHMgcmVjZWl2ZWQgYnkgYSBub2RlIHByb3ZpZGVzIGFuIGluZGljYXRvciBvZiBpdHMgaW1wb3J0YW5jZSBpbiB0aGUgbmV0d29yay4gSW50dWl0aXZlbHksIHdlIGV4cGVjdCB0aGF0IG5vZGVzIGhhdmUgYSBoaWdoIFBhZ2VSYW5rIGlmIHRoZXJlIGFyZSBtYW55IG5vZGVzIHRoYXQgcG9pbnQgdG8gaXQsIG9yIGlmIHRoZXJlIGFyZSBub2RlcyB0aGF0IHBvaW50IHRvIGl0IHRoYXQgdGhlbXNlbHZlcyBoYXZlIGEgaGlnaCBQYWdlUmFuay4gCgpgYGB7cn0KIyB1bmRpcmVjdGVkLCB1bndlaWdodGVkIG5ldHdvcmsgCnBhZ2VfcmFuayhncmFwaCA9IGdfcG5ldF9lZGdlbGlzdCwgZGlyZWN0ZWQgPSBGLCB3ZWlnaHRzID0gTkEpJHZlY3RvciB8PiBoZWFkKDEwKQoKIyBkaXJlY3RlZCwgd2VpZ2h0ZWQgbmV0d29yayAKcGFnZV9yYW5rKGdyYXBoID0gZ19zbmV0X2VkZ2VsaXN0LCBkaXJlY3RlZCA9IFQsIHdlaWdodHMgPSBOVUxMKSR2ZWN0b3IgfD4gaGVhZCgxMCkKYGBgCgpUaGUgYHdlaWdodHNgIGFuZCBgZGlyZWN0ZWRgIGFyZ3VtZW50cyBjYW4gYmUgYWRqdXN0ZWQgZGVwZW5kaW5nIG9uIHlvdXIgZ3JhcGggdHlwZS4gSXQgaXMgaW1wb3J0YW50IHRvIG5vdGUgdGhhdCB0aGUgaW50ZXJwcmV0YXRpb24gb2YgZWRnZSB3ZWlnaHRzIGhlcmUgaXMgdGhhdCBvZiAiY29ubmVjdGlvbiBzdHJlbmd0aCIgKGZyb20gYGlncmFwaGAgbWFudWFsOiAiVGhpcyBmdW5jdGlvbiBpbnRlcnByZXRzIGVkZ2Ugd2VpZ2h0cyBhcyBjb25uZWN0aW9uIHN0cmVuZ3Rocy4gSW4gdGhlIHJhbmRvbSBzdXJmZXIgbW9kZWwsIGFuIGVkZ2Ugd2l0aCBhIGxhcmdlciB3ZWlnaHQgaXMgbW9yZSBsaWtlbHkgdG8gYmUgc2VsZWN0ZWQgYnkgdGhlIHN1cmZlci4iKS4gVGhpcyBpcyBkaWZmZXJlbnQgZnJvbSB0aGUgImRpc3RhbmNlIiBpbnRlcnByZXRhdGlvbiBvZiBlZGdlIHdlaWdodHMgYnkgY2xvc2VuZXNzIGFuZCBiZXR3ZWVubmVzcy4gCgojIyBNZXNvLWxldmVsIChjb21tdW5pdHkgc3RydWN0dXJlKQoKQSBjb21tb24gZmVhdHVyZSBvZiBtYW55IHJlYWwtd29ybGQgbmV0d29ya3MgaXMgdGhhdCB0aGV5IGhhdmUgKipjb21tdW5pdHkgc3RydWN0dXJlKiouIE5vZGVzIGFyZSBjb25zaWRlcmVkIHRvIGJlIHBhcnQgb2YgdGhlIHNhbWUgY29tbXVuaXR5IGlmIHRoZSBkZW5zaXR5IG9mIGNvbm5lY3Rpb25zIGFtb25nIHRob3NlIG5vZGVzIGlzIHJlbGF0aXZlbHkgaGlnaGVyIHRoYW4gdGhlIGRlbnNpdHkgb2YgY29ubmVjdGlvbnMgYmV0d2VlbiBub2RlcyBmcm9tIGRpZmZlcmVudCBjb21tdW5pdGllcyAoTmV3bWFuLCAyMDA2KS4KCioqTW9kdWxhcml0eSwgUSoqLCBpcyBhIG1lYXN1cmUgb2YgdGhlIGRlbnNpdHkgb2YgbGlua3MgaW5zaWRlIGNvbW11bml0aWVzIGluIHJlbGF0aW9uIHRvIHRoZSBkZW5zaXR5IG9mIGxpbmtzIGJldHdlZW4gY29tbXVuaXRpZXMgKEZvcnR1bmF0bywgMjAxMCkuIE5ldHdvcmtzIHdpdGggaGlnaGVyIFEgYXJlIHNhaWQgdG8gc2hvdyBzdHJvbmcgZXZpZGVuY2Ugb2YgY29tbXVuaXR5IHN0cnVjdHVyZS4gCgoqKkhvdyBkbyBuZXR3b3JrIHNjaWVudGlzdHMgImZpbmQiIGNvbW11bml0aWVzIGluIG5ldHdvcmtzPyoqIAoKTWFueSBjb21tdW5pdHkgZGV0ZWN0aW9uIG1ldGhvZHMgaGF2ZSBiZWVuIGRldmVsb3BlZCBieSBuZXR3b3JrIHNjaWVudGlzdHMgdG8gZGV0ZWN0IGNvbW11bml0aWVzIGluIG5ldHdvcmtzLiBJdCBpcyBzb3J0IG9mIGxpa2UgYSAiY2x1c3RlcmluZyBhbmFseXNpcyIgZm9yIG5ldHdvcmsgc2NpZW50aXN0cy4gSGVyZSB3ZSB3aWxsIGdvIHRocm91Z2ggZm91ciBleGFtcGxlcyB0aGF0IHJlZmxlY3QgYnJvYWQgY2xhc3NlcyBvZiBjb21tdW5pdHkgZGV0ZWN0aW9uIHRlY2huaXF1ZXMuIEVhY2ggZGlmZmVycyBpbiB0aGVpciBpbXBsZW1lbnRhdGlvbiwgYW5kIHJlZmxlY3RzIHRoZSBjcmVhdG9yJ3MgaW1wbGljaXQgZGVmaW5pdGlvbiBvZiB3aGF0IGlzIGEgY29tbXVuaXR5LiAKCk5vdGU6IEluIHRoaXMgdHV0b3JpYWwgdGhlIGNvbW11bml0eSBkZXRlY3Rpb24gaXMgb25seSBpbXBsZW1lbnRlZCBvbiBgZ19wbmV0X2Fkam1hdGAsIGFuIHVuZGlyZWN0ZWQgYW5kIHVud2VpZ2h0ZWQgbmV0d29yay4gVGhlIHVzdWFsIGFyZ3VtZW50cyBmb3IgYHdlaWdodHNgIGFuZCBgZGlyZWN0ZWRgIGFyZSBhdmFpbGFibGUgaW4gdGhlIGNvbW11bml0eSBkZXRlY3Rpb24gZnVuY3Rpb24gaWYgeW91IHdpc2ggdG8gdG9nZ2xlIHRoZXNlIG9uIGZvciB3ZWlnaHRlZCBhbmQgZGlyZWN0ZWQgbmV0d29ya3MuIAoKIyMjIEVkZ2UgYmV0d2Vlbm5lc3MgKCJkaXZpc2l2ZSBtZXRob2QiKQoKVGhlIGNvcmUgaWRlYSBiZWhpbmQgdGhpcyB0ZWNobmlxdWUgaXMgdGhhdCBlZGdlcyBjb25uZWN0aW5nIHNlcGFyYXRlIGNvbW11bml0aWVzIHRlbmQgdG8gaGF2ZSBoaWdoICoqZWRnZSBiZXR3ZWVubmVzcyoqIGFzIGFsbCB0aGUgc2hvcnRlc3QgcGF0aHMgZnJvbSBvbmUgY29tbXVuaXR5IHRvIGFub3RoZXIgbXVzdCB0cmF2ZXJzZSB0aHJvdWdoIHRoZW0uIAoKVGhlIGFsZ29yaXRobSB3b3JrcyBieSBjYWxjdWxhdGluZyB0aGUgZWRnZSBiZXR3ZWVubmVzcyBvZiBhbGwgZWRnZXMgdGhlIGdyYXBoLCAqcmVtb3ZpbmcqIHRoZSBlZGdlIHdpdGggdGhlIGhpZ2hlc3QgZWRnZSBiZXR3ZWVubmVzcyBzY29yZSwgdGhlbiByZWNhbGN1bGF0aW5nIGVkZ2UgYmV0d2Vlbm5lc3Mgb2YgcmVtYWluaW5nIGVkZ2VzIGFuZCBhZ2FpbiByZW1vdmluZyB0aGUgb25lIHdpdGggdGhlIGhpZ2hlc3Qgc2NvcmUuIFRoaXMgcmVwZWF0cyB1bnRpbCBtb2R1bGFyaXR5IGNhbm5vdCBiZSBpbXByb3ZlZCBmdXJ0aGVyLiAgCgpgYGB7cn0KIyBydW4gdGhlIGNvbW11bml0eSBkZXRlY3Rpb24gYWxnb3JpdGhtIApyZXN1bHRzX2VkZ2UgPC0gY2x1c3Rlcl9lZGdlX2JldHdlZW5uZXNzKGdyYXBoID0gZ19wbmV0X2Fkam1hdCkKCiMgb3ZlcmFsbCByZXN1bHRzIAptb2R1bGFyaXR5KHJlc3VsdHNfZWRnZSkKc2l6ZXMocmVzdWx0c19lZGdlKQoKIyBzcGVjaWZpYyBjb21tdW5pdHkgbWVtYmVyc2hpcCBmb3IgZWFjaCBub2RlIApjYmluZCgKICByZXN1bHRzX2VkZ2UkbmFtZXMsCiAgcmVzdWx0c19lZGdlJG1lbWJlcnNoaXAKKSB8PiBoZWFkKDUpCmBgYAoKU2F2aW5nIHRoZSBjb21tdW5pdHkgZGV0ZWN0aW9uIHJlc3VsdHMgYXMgYSBgY29tbXVuaXRpZXNgIG9iamVjdCBlbmFibGVzIHRoZSB1c2Ugb2Ygc3BlY2lhbCBmdW5jdGlvbnMgbGlrZSBgbW9kdWxhcml0eSgpYCBhbmQgYHNpemVzKClgIHRvIG9idGFpbiB0aGUgbW9kdWxhcml0eSBvZiB0aGUgbmV0d29yayBhbmQgaXRzIGNvbW11bml0eSBzaXplcy4gSSBoYXZlIGFsc28gaW5jbHVkZWQgY29kZSB0aGF0IHNob3dzIGhvdyB0byBleHRyYWN0IHRoZSBjb21tdW5pdHkgbWVtYmVyc2hpcHMgb2YgYWxsIG5vZGVzIGluIHRoZSBuZXR3b3JrIGZvciBmdXJ0aGVyIGFuYWx5c2lzLiBUaGlzIGFwcGxpZXMgdG8gdGhlIG90aGVyIGNvbW11bml0eSBkZXRlY3Rpb24gYWxnb3JpdGhtcyBhcyB3ZWxsLiAKCiMjIyBMb3V2YWluIG1ldGhvZCAoImdyZWVkeSwgbWF4aW1pemF0aW9uIG1ldGhvZCIpCgpUaGUgY29yZSBpZGVhIGJlaGluZCB0aGlzIG1ldGhvZCBpcyB0aGF0IGNvbW11bml0aWVzIGFyZSBlc3NlbnRpYWxseSDigJxtZXJnZXJz4oCdIG9mIHNtYWxsIGNvbW11bml0aWVzIChCbG9uZGVsIGV0IGFsLiwgMjAwOCksIHJlZmxlY3RpbmcgdGhlIHNlbGYtc2ltaWxhciBuYXR1cmUgb2YgY29tcGxleCBuZXR3b3Jrcy4KCjEuIEVhY2ggbm9kZSBpcyBhc3NpZ25lZCB0byBvbmUgY29tbXVuaXR5IHN1Y2ggdGhhdCB0aGVyZSBhcmUgYXMgbWFueSBjb21tdW5pdGllcyBhcyB0aGVyZSBhcmUgbm9kZXMuIFRoZW4gcmVtb3ZlIG5vZGUgKmkqIGZyb20gaXRzIGNvbW11bml0eSBhbmQgcGxhY2luZyBpdCBpbiB0aGUgY29tbXVuaXR5IG9mIHRoZSBuZWlnaGJvciB3aGljaCB5aWVsZHMgdGhlIGdyZWF0ZXN0IGdhaW4gaW4gbW9kdWxhcml0eS4gCiAgLSByZXBlYXQgZm9yIGFsbCBub2RlcyBpbiB0aGUgbmV0d29yawoKMi4gQSBuZXcgbmV0d29yayBpcyBidWlsdCB3aGVyZSBub2RlcyBhcmUgdGhlICpjb21tdW5pdGllcyBmb3VuZCBpbiB0aGUgcHJldmlvdXMgcGhhc2UqLiBSZXBlYXQgU3RlcCAxLiAKICAtIHJlcGVhdCBTdGVwIDEgYW5kIDIgdW50aWwgaXQgaXMgbm90IHBvc3NpYmxlIHRvIGZ1cnRoZXIgaW5jcmVhc2UgdGhlIHZhbHVlIG9mIFEKCmBgYHtyfQojIHJ1biB0aGUgY29tbXVuaXR5IGRldGVjdGlvbiBhbGdvcml0aG0gCnJlc3VsdHNfbG91dmFpbiA8LSBjbHVzdGVyX2xvdXZhaW4oZ3JhcGggPSBnX3BuZXRfYWRqbWF0KQoKIyBvdmVyYWxsIHJlc3VsdHMgCm1vZHVsYXJpdHkocmVzdWx0c19sb3V2YWluKQpzaXplcyhyZXN1bHRzX2xvdXZhaW4pCgojIHNwZWNpZmljIGNvbW11bml0eSBtZW1iZXJzaGlwIGZvciBlYWNoIG5vZGUgCmNiaW5kKAogIHJlc3VsdHNfbG91dmFpbiRuYW1lcywKICByZXN1bHRzX2xvdXZhaW4kbWVtYmVyc2hpcAopIHw+IGhlYWQoNSkKYGBgCgojIyMgUmFuZG9tIHdhbGtlciAoImR5bmFtaWMgbWV0aG9kIikKClRoZSBjb3JlIGlkZWEgYmVoaW5kIHRoaXMgbWV0aG9kIGlzIHRoYXQgaWYgdGhlcmUgYXJlIGNvbW11bml0aWVzIGluIHRoZSBuZXR3b3JrLCBhIHJhbmRvbSB3YWxrZXIgd2lsbCB0ZW5kIHRvIHNwZW5kIG1vcmUgdGltZSBpbnNpZGUgdGhlIGNvbW11bml0eSB0aGFuIG91dHNpZGUuIAoKVGhlIFdhbGt0cmFwIGFsZ29yaXRobSBncm91cHMgbm9kZXMgdG9nZXRoZXIgYmFzZWQgb24gdGhlIHNpbWlsYXJpdGllcyBvZiB0aGUgcGF0aHMgdGFrZW4gYnkgdGhlIHJhbmRvbSB3YWxrZXIgc3RhcnRpbmcgZnJvbSB0aGF0IG5vZGUuIFRoZSBpZGVhIGlzIHRvIG1lcmdlIHNldHMgb2YgdmVydGljZXMgdGhhdCBoYXZlIGxvdyAiZGlzdGFuY2UiIGZyb20gZWFjaCBvdGhlci4gCgpgYGB7cn0KIyBydW4gdGhlIGNvbW11bml0eSBkZXRlY3Rpb24gYWxnb3JpdGhtIApyZXN1bHRzX3dhbGt0cmFwIDwtIGNsdXN0ZXJfd2Fsa3RyYXAoZ3JhcGggPSBnX3BuZXRfYWRqbWF0KQoKIyBvdmVyYWxsIHJlc3VsdHMgCm1vZHVsYXJpdHkocmVzdWx0c193YWxrdHJhcCkKc2l6ZXMocmVzdWx0c193YWxrdHJhcCkKCiMgc3BlY2lmaWMgY29tbXVuaXR5IG1lbWJlcnNoaXAgZm9yIGVhY2ggbm9kZSAKY2JpbmQoCiAgcmVzdWx0c193YWxrdHJhcCRuYW1lcywKICByZXN1bHRzX3dhbGt0cmFwJG1lbWJlcnNoaXAKKSB8PiBoZWFkKDUpCmBgYAoKIyMjIEluZm9tYXAgKCJpbmZvcm1hdGlvbi10aGVvcmV0aWMgbWV0aG9kIikKClRoZSBjb3JlIGlkZWEgYmVoaW5kIHRoaXMgYWxnb3JpdGhtIGlzIHRvIGxldmVyYWdlIG9uIGluZm9ybWF0aW9uLXRoZW9yZXRpYyBtZXRob2RzIHRvICJkZXNjcmliZSIgdGhlIGluZm9ybWF0aW9uIGZsb3cgb2YgdGhlIGVudGlyZSBzeXN0ZW0gKGJhc2VkIG9uIHJhbmRvbSB3YWxrcykuICAKClRoZSBJbmZvbWFwIGFsZ29yaXRobSBhdHRlbXB0cyB0byBkZXNjcmliZSB0aGUgcmFuZG9tIHdhbGtlcidzIHRyYWplY3RvcnkgdXNpbmcgdGhlIGZld2VzdCBudW1iZXIgb2YgImJpdHMiIG9mIGluZm9ybWF0aW9uLiBDb21tdW5pdGllcyBhcmUgZ3JvdXBzIG9mIG5vZGVzIHRoYXQgcmVjZWl2ZSBuZXcgIm5hbWVzIiBkdXJpbmcgdGhlIGNvbXByZXNzaW9uLiAKCmBgYHtyfQojIHJ1biB0aGUgY29tbXVuaXR5IGRldGVjdGlvbiBhbGdvcml0aG0gCnJlc3VsdHNfaW5mb21hcCA8LSBjbHVzdGVyX2luZm9tYXAoZ3JhcGggPSBnX3BuZXRfYWRqbWF0KQoKIyBvdmVyYWxsIHJlc3VsdHMgCm1vZHVsYXJpdHkocmVzdWx0c19pbmZvbWFwKQpzaXplcyhyZXN1bHRzX2luZm9tYXApCgojIHNwZWNpZmljIGNvbW11bml0eSBtZW1iZXJzaGlwIGZvciBlYWNoIG5vZGUgCmNiaW5kKAogIHJlc3VsdHNfaW5mb21hcCRuYW1lcywKICByZXN1bHRzX2luZm9tYXAkbWVtYmVyc2hpcAopIHw+IGhlYWQoNSkKYGBgCgojIyMgQ29tcGFyaXNvbiBvZiBtZXRob2RzIAoKRm9ydHVuYXRvICgyMDEwKSBzdW1tYXJpemVkIHBhcGVycyB0aGF0IGNvbmR1Y3RlZCBhIGNvbXByZWhlbnNpdmUgY29tcGFyaXNvbiBvZiBjb21tdW5pdHkgZGV0ZWN0aW9uIHRlY2huaXF1ZXMuIAoKR2VuZXJhbGx5LCBSb3N2YWxsICYgQmVyZ3N0b3JtJ3MgSW5mb21hcCBhbmQgQmxvbmRlbCBldCBhbC4ncyBncmVlZHkgbW9kdWxhcml0eSBtYXhpbWl6YXRpb24gbWV0aG9kIHBlcmZvcm1lZCB0aGUgYmVzdC4gQm90aCBhbHNvIHdlcmUgcmVsYXRpdmVseSBmYXN0IGFsZ29yaXRobXMuIAoKVGhlIGNvZGUgYmVsb3cgaWxsdXN0cmF0ZXMgdGhlIHNpbWlsYXJpdGllcyBhbmQgZGlmZmVyZW5jZXMgaW4gdGhlIHJlc3VsdHMgb2YgdGhlIHZhcmlvdXMgY29tbXVuaXR5IGRldGVjdGlvbiBtZXRob2RzLiAKCmBgYHtyfQojIGNvbXBhcmluZyB0aGUgUXMKCnJiaW5kKAogIGMoJ2VkZ2VfYmV0d2Vlbm5lc3MnLCAnTG91dmFpbicsICdXYWxrdHJhcCcsICdJbmZvbWFwJyksCiAgYyhtb2R1bGFyaXR5KHJlc3VsdHNfZWRnZSksIG1vZHVsYXJpdHkocmVzdWx0c19sb3V2YWluKSwgbW9kdWxhcml0eShyZXN1bHRzX3dhbGt0cmFwKSwgbW9kdWxhcml0eShyZXN1bHRzX2luZm9tYXApKSB8PiByb3VuZCgzKQopCgojIGNvbXBhcmluZyBjb21tdW5pdHkgbWVtYmVyc2hpcCAKCnBhcihtYXI9YygwLDAsMCwwKSsuNiwgbWZyb3cgPSBjKDIsMikpICMgcmVkdWNlIG1hcmdpbnMgYW5kIHBsb3QgYm90aCBuZXR3b3JrcyB0b2dldGhlcgoKc2V0LnNlZWQoMSkKZml4ZWRfbCA8LSBsYXlvdXRfd2l0aF9mcihnX3BuZXRfYWRqbWF0KSAjIHRvIGZpeCBub2RlIGxheW91dCBhY3Jvc3MgcGxvdHMgCgpwbG90KHJlc3VsdHNfZWRnZSwgZ19wbmV0X2Fkam1hdCwgbGF5b3V0ID0gZml4ZWRfbCwgbWFpbiA9ICdlZGdlIGJldHdlZW5uZXNzJykKcGxvdChyZXN1bHRzX2xvdXZhaW4sIGdfcG5ldF9hZGptYXQsIGxheW91dCA9IGZpeGVkX2wsIG1haW4gPSAnTG91dmFpbicpCnBsb3QocmVzdWx0c193YWxrdHJhcCwgZ19wbmV0X2Fkam1hdCwgbGF5b3V0ID0gZml4ZWRfbCwgbWFpbiA9ICdXYWxrdHJhcCcpCnBsb3QocmVzdWx0c19pbmZvbWFwLCBnX3BuZXRfYWRqbWF0LCBsYXlvdXQgPSBmaXhlZF9sLCBtYWluID0gJ0luZm9tYXAnKQpgYGAKCiMjIE1hY3JvLWxldmVsIChuZXR3b3JrLWxldmVsKQoKSW4gdGhpcyBzZWN0aW9uLCB3ZSB3aWxsIHJldmlldyBuZXR3b3JrIHNjaWVuY2UgbWVhc3VyZXMgdGhhdCBkZXNjcmliZSB0aGUgb3ZlcmFsbCBvciBnbG9iYWwgc3RydWN0dXJlIG9mIHRoZSBlbnRpcmUgbmV0d29yay4gWW91IGNhbiB0aGluayBvZiB0aGVzZSBtZWFzdXJlcyBhcyBwcm92aWRpbmcgYSAiYmlyZCdzIGV5ZSB2aWV3IiBvZiB5b3VyIG5ldHdvcmssIGFuZCB0aGV5IGFyZSB1c2VmdWwgZm9yIGNvbXBhcmluZyBkaWZmZXJlbnQgbmV0d29yayByZXByZXNlbnRhdGlvbnMuIAoKIyMjIEF2ZXJhZ2UgU2hvcnRlc3QgUGF0aCBMZW5ndGggCgoqKkF2ZXJhZ2Ugc2hvcnRlc3QgcGF0aCBsZW5ndGgqKiAoQVNQTCkgcmVmZXJzIHRvIHRoZSBtZWFuIG9mIHRoZSBzaG9ydGVzdCBwb3NzaWJsZSBwYXRoIGJldHdlZW4gYWxsIHBvc3NpYmxlIHBhaXJzIG9mIG5vZGVzIGluIHRoZSBuZXR3b3JrLiAoVGhpcyBsb29zZWx5IGNvcnJlc3BvbmRzIHRvIHRoZSBpZGVhIG9mICJzaXggZGVncmVlcyBvZiBzZXBhcmF0aW9uIiBpbiBzb2NpYWwgbmV0d29ya3MuKSAgCgpgYGB7cn0KIyB1bmRpcmVjdGVkLCB1bndlaWdodGVkIG5ldHdvcmsgCmF2ZXJhZ2UucGF0aC5sZW5ndGgoZ3JhcGggPSBnX3BuZXRfYWRqbWF0LCB3ZWlnaHRzID0gTkEsIGRpcmVjdGVkID0gRikKYXZlcmFnZS5wYXRoLmxlbmd0aChncmFwaCA9IGdfcG5ldF9hZGptYXQpICMgZGVmYXVsdCB2YWx1ZXMgZm9yIHdlaWdodHMgYW5kIGRpcmVjdGVkIGdpdmUgdGhlIHNhbWUgdmFsdWVzIHNpbmNlIHRoaXMgaXMgYW4gdW5kaXJlY3RlZCwgdW53ZWlnaHRlZCBuZXR3b3JrIAoKIyBhbiBhbHRlcm5hdGl2ZSBmdW5jdGlvbiAtIGJvdGggZ2l2ZSB0aGUgc2FtZSByZXN1bHQgCm1lYW5fZGlzdGFuY2UoZ3JhcGggPSBnX3BuZXRfYWRqbWF0KQoKIyBkaXJlY3RlZCwgd2VpZ2h0ZWQgbmV0d29yayAKbWVhbl9kaXN0YW5jZShncmFwaCA9IGdfc25ldF9hZGptYXQsIHdlaWdodHMgPSBOVUxMLCBkaXJlY3RlZCA9IFQpCm1lYW5fZGlzdGFuY2UoZ3JhcGggPSBnX3NuZXRfYWRqbWF0LCB3ZWlnaHRzID0gTlVMTCwgZGlyZWN0ZWQgPSBGKSAjIGlnbm9yZSBkaXJlY3Rpb24gCm1lYW5fZGlzdGFuY2UoZ3JhcGggPSBnX3NuZXRfYWRqbWF0LCB3ZWlnaHRzID0gTkEsIGRpcmVjdGVkID0gVCkgIyBpZ25vcmUgd2VpZ2h0cyAKYGBgCgojIyMgR2xvYmFsIENsdXN0ZXJpbmcgQ29lZmZpY2llbnQgIAoKKipHbG9iYWwgY2x1c3RlcmluZyBjb2VmZmljaWVudCoqIHJlZmVycyB0byB0aGUgbnVtYmVyIG9mIGNsb3NlZCB0cmlhbmdsZXMgaW4gdGhlIG5ldHdvcmsgcmVsYXRpdmUgdG8gdGhlIG51bWJlciBvZiBwb3NzaWJsZSB0cmlhbmdsZXMuIEl0IGlzIGEgbWVhc3VyZSBvZiBvdmVyYWxsIGxldmVsIG9mICpsb2NhbCogY29ubmVjdGl2aXR5IGFtb25nIG5vZGVzIGluIHRoZSBuZXR3b3JrLiAKCkEgc2ltcGxlIHdheSBvZiB0aGlua2luZyBhYm91dCB0aGlzIGNvbmNlcHQgaXMgdGhhdCBpdCBpcyBtZWFzdXJpbmcgdGhlIHByb2JhYmlsaXR5IHRoYXQgZWFjaCBwYWlyIG9mICJmcmllbmRzIiBvZiBhIGdpdmVuIG5vZGUgYXJlIGFsc28gZnJpZW5kcyB3aXRoIGVhY2ggb3RoZXIuCgpgYGB7cn0KdHJhbnNpdGl2aXR5KGdyYXBoID0gZ19wbmV0X2Fkam1hdCwgdHlwZSA9ICdnbG9iYWwnKQp0cmFuc2l0aXZpdHkoZ3JhcGggPSBnX3NuZXRfYWRqbWF0LCB0eXBlID0gJ2dsb2JhbCcpCmBgYAoKIyMjIE5ldHdvcmsgRGVuc2l0eQoKKipOZXR3b3JrIGRlbnNpdHkqKiByZWZlcnMgdG8gdGhlIHJhdGlvIG9mIHRoZSBudW1iZXIgb2YgKGV4aXN0aW5nKSBlZGdlcyBhbmQgdGhlIG51bWJlciBvZiBwb3NzaWJsZSBlZGdlcyBhbW9uZyBub2RlcyBpbiB0aGUgbmV0d29yay4gCgpgYGB7cn0KZ3JhcGguZGVuc2l0eShncmFwaCA9IGdfcG5ldF9hZGptYXQpCmdyYXBoLmRlbnNpdHkoZ3JhcGggPSBnX3NuZXRfYWRqbWF0KQpgYGAKCiMjIyBOZXR3b3JrIERpYW1ldGVyIAoKKipOZXR3b3JrIGRpYW1ldGVyKiogcmVmZXJzIHRvIGxlbmd0aCBvZiB0aGUgbG9uZ2VzdCBzaG9ydGVzdCBwYXRoIGJldHdlZW4gbm9kZXMgaW4gdGhlIG5ldHdvcmsuIEluc3RlYWQgb2YgZ2V0dGluZyB0aGUgbWVhbiBvZiBhbGwgdGhlIHNob3J0ZXN0IHBhdGhzIGFzIHlvdSBkaWQgaW4gQVNQTCwgd2hhdCBpcyB0aGUgKm1heGltdW0qIGxlbmd0aCBvZiB0aG9zZSBzaG9ydCBwYXRocz8gCgpgYGB7cn0KIyB1bmRpcmVjdGVkLCB1bndlaWdodGVkIGdyYXBoIApkaWFtZXRlcihncmFwaCA9IGdfcG5ldF9hZGptYXQsIGRpcmVjdGVkID0gRiwgd2VpZ2h0cyA9IE5BKQpkaWFtZXRlcihncmFwaCA9IGdfcG5ldF9hZGptYXQpCgojIGRpcmVjdGVkLCB3ZWlnaHRlZCBncmFwaCAKZGlhbWV0ZXIoZ3JhcGggPSBnX3NuZXRfYWRqbWF0LCBkaXJlY3RlZCA9IFQsIHdlaWdodHMgPSBOVUxMKQpkaWFtZXRlcihncmFwaCA9IGdfc25ldF9hZGptYXQsIGRpcmVjdGVkID0gRiwgd2VpZ2h0cyA9IE5VTEwpICMgaWdub3JlIGRpcmVjdGlvbiAKZGlhbWV0ZXIoZ3JhcGggPSBnX3NuZXRfYWRqbWF0LCBkaXJlY3RlZCA9IFQsIHdlaWdodHMgPSBOQSkgIyBpZ25vcmUgd2VpZ2h0cyAKYGBgCgojIEFwcGVuZGl4OiBOZXR3b3JrIFZpc3VhbGl6YXRpb24gCgpUaGUgcHVycG9zZSBvZiB0aGlzIHNlY3Rpb24gaXMgdG8gcHJvdmlkZSBhIGdlbnRsZSBpbnRyb2R1Y3Rpb24gdG8gbmV0d29yayB2aXN1YWxpemF0aW9uIGluIGBpZ3JhcGhgLiBHZW5lcmFsbHksIGl0IGlzIGFkdmlzYWJsZSB0byBvbmx5IHZpc3VhbGl6ZSBzbWFsbCBuZXR3b3JrcyBvciBhIHN1YnNldCBvZiBhIGxhcmdlciBuZXR3b3JrOyB0aGlzIGlzIGJlY2F1c2UgaXQgcXVpY2tseSBiZWNvbWVzIHRvbyBjaGFsbGVuZ2luZyB0byBkZXZlbG9wIGEgbWVhbmluZ2Z1bCB2aXN1YWwgcmVwcmVzZW50YXRpb24gb2YgYSBsYXJnZSBuZXR3b3JrIHdpdGggbWFueSBub2RlcyBhbmQgZWRnZXMuIAoKRm9yIHRoZSBwdXJwb3NlcyBvZiB0aGUgdHV0b3JpYWwgd2Ugd2lsbCB3b3JrIHdpdGggYSByYW5kb21seSBnZW5lcmF0ZWQgbmV0d29yayBgZ2AuIFRoZSBkZWZhdWx0IHBsb3QgZG9lcyBub3QgbG9vayBuaWNlLi4uCgpgYGB7ciBkZWZhdWx0LXBsb3R9CnNldC5zZWVkKDUpCmcgPC0gc2FtcGxlX2ducChuID0gMjAsIHAgPSAwLjIwKSAjIDIwIG5vZGVzIHdpdGggZWRnZSBwcm9iYWJpbGl0eSBvZiAwLjIKcGxvdChnKQpgYGAKCiMjIE5vZGUgUGFyYW1ldGVycyAKClRoaXMgY29kZSBjaHVuayBpbGx1c3RyYXRlcyBhIGZldyBvZiB0aGUgbW9zdCBjb21tb25seSB1c2VkIG5vZGUvdmVydGV4IHBhcmFtZXRlcnMgaW4gdmlzdWFsaXphdGlvbi4gCgpgYGB7ciBub2RlLWFyZ3N9CnBhcihtYXI9YygwLDAsMCwwKSsuMSkgIyByZWR1Y2UgbWFyZ2lucwoKcGxvdChnLAogICAgIHZlcnRleC5jb2xvciA9ICdkYXJrb3JjaGlkMScsICMgY2hhbmdlIGNvbG9yIG9mIG5vZGVzIAogICAgIHZlcnRleC5mcmFtZS5jb2xvciA9ICdsaWdodGdyZXknLCAjIGNoYW5nZSB0aGUgb3V0bGluZSBjb2xvciBvZiBub2RlcyAKICAgICB2ZXJ0ZXgubGFiZWwuZGlzdCA9IDEuNywgIyBhZGp1c3QgZGlzdGFuY2Ugb2Ygbm9kZSBsYWJlbCBmcm9tIG5vZGUgCiAgICAgdmVydGV4LmxhYmVsLmZhbWlseSA9ICdzYW5zJywgIyBjaGFuZ2UgZm9udCAKICAgICB2ZXJ0ZXguc2l6ZSA9IGRlZ3JlZShnKSAjIHNpemUgb2Ygbm9kZSBjb3JyZXNwb25kcyB0byBpdHMgZGVncmVlIAogICAgICkKYGBgCgojIyBFZGdlIFBhcmFtZXRlcnMgCgpUbyBpbGx1c3RyYXRlIHRoZSBlZGdlIHBhcmFtZXRlcnMsIGEgd2VpZ2h0ZWQgYW5kIGRpcmVjdGVkIG5ldHdvcmsgYGd3YCBpcyBjcmVhdGVkLiBUaGUgY29kZSBjaHVuayBiZWxvdyBpbGx1c3RyYXRlcyBhIGZldyBvZiB0aGUgbW9zdCBjb21tb25seSB1c2VkIGVkZ2UgcGFyYW1ldGVycyBpbiB2aXN1YWxpemF0aW9uLiAKCmBgYHtyIGVkZ2UtYXJnc30Kc2V0LnNlZWQoOSkKZ3cgPC0gc2FtcGxlX2ducChuID0gMjAsIHAgPSAwLjIwLCBkaXJlY3RlZCA9IFQpICMgMjAgbm9kZXMgd2l0aCBlZGdlIHByb2JhYmlsaXR5IG9mIDAuMiwgZWRnZXMgYXJlIGRpcmVjdGVkCkUoZ3cpJHdlaWdodCA8LSBzYW1wbGUoMTo1LCBzaXplID0gZ3NpemUoZ3cpLCByZXBsYWNlID0gVCkgIyByYW5kb21seSBhZGQgZWRnZSB3ZWlnaHRzIG9mIDEgdG8gNSAKc3VtbWFyeShndykgIyB0aGUgJ0RXJyBpbmRpY2F0ZXMgYSBkaXJlY3RlZCBhbmQgd2VpZ2h0ZWQgbmV0d29yayAKCnBhcihtYXI9YygwLDAsMCwwKSsuMSkgIyByZWR1Y2UgbWFyZ2lucwoKcGxvdChndywKICAgICBlZGdlLmNvbG9yID0gJ2RhcmtvbGl2ZWdyZWVuJywgIyBjb2xvciBvZiBlZGdlcyAKICAgICBlZGdlLndpZHRoID0gRShndykkd2VpZ2h0LCAjIHRoZSB3aWR0aCBvZiBlZGdlcyBjb3JyZXNwb25kcyB0byB0aGUgZWRnZSB3ZWlnaHQgCiAgICAgZWRnZS5jdXJ2ZWQgPSAwLjUsICMgYWRkIGN1cnZhdHVyZSB0byBlZGdlcyAKICAgICBlZGdlLmFycm93LndpZHRoID0gMC41LCAjIGFkanVzdCBhcnJvdyB3aWR0aAogICAgIGVkZ2UuYXJyb3cuc2l6ZSA9IDAuOCAjIGFkanVzdCBhcnJvdyBzaXplIAogICAgICkKYGBgCgojIyBOZXR3b3JrIExheW91dHMgCgpZb3UgY2FuIGFsc28gYWRqdXN0IHRoZSBvdmVyYWxsIGxheW91dCBvZiB0aGUgbmV0d29yay4gVGhlc2UgbGF5b3V0cyBhcmUgZGlmZmVyZW50IG5ldHdvcmsgdmlzdWFsaXphdGlvbiBhcHByb2FjaGVzIHRoYXQgdXNlIHZhcmlvdXMgYWxnb3JpdGhtcyB0byBkZWNpZGUgaG93IG5vZGVzIHNob3VsZCBiZSBiZXN0IHBvc2l0aW9uZWQgb24gYSAyRCBwbGFuZSwgd2hpbGUgY29uc2lkZXJpbmcgdGhlIG5hdHVyZSBvZiB0aGVpciBlZGdlIGNvbm5lY3Rpdml0eS4gVGhlcmUgYXJlIG1hbnkgZGlmZmVyZW50IGxheW91dHMgYXZhaWxhYmxlIC0geW91IGNhbiBlaXRoZXIgY2hlY2sgb3V0IHRoZSBgaWdyYXBoYCBtYW51YWwgb3IgY2hlY2sgb3V0IHRoaXMgb25saW5lIHR1dG9yaWFsIChodHRwczovL2thdGV0by5uZXQvbmV0d29yay12aXN1YWxpemF0aW9uKSBmb3IgaW5zcGlyYXRpb24uICAKCmBgYHtyIGxheW91dHN9CnBhcihtYXI9YygwLDAsMCwwKSsuNCwgbWZyb3cgPSBjKDEsMikpICMgcmVkdWNlIG1hcmdpbnMgYW5kIHBsb3QgYm90aCBuZXR3b3JrcyB0b2dldGhlcgoKc2V0LnNlZWQoMSkgCgpwbG90KGcsIGxheW91dCA9IGxheW91dF9pbl9jaXJjbGUsIG1haW4gPSAnY2lyY2xlJykKcGxvdChnLCBsYXlvdXQgPSBsYXlvdXRfd2l0aF9nZW0sIG1haW4gPSAnZ2VtJykKYGBgCgojIEFwcGVuZGl4OiBOZXR3b3JrIENvbXBvbmVudHMgCgpJbiB0aGlzIHNlY3Rpb24sIHRoZSBnb2FsIGlzIHRvIGludHJvZHVjZSB1c2VmdWwgUiBjb2RlIGZvciAoaSkgZGV0ZWN0aW5nIGlmIHlvdXIgbmV0d29yayBjb21wcmlzZXMgb2YgYSBzaW5nbGUgY29ubmVjdGVkIGNvbXBvbmVudCBvciBtdWx0aXBsZSwgYW5kIChpaSkgZXh0cmFjdGluZyB0aGUgbGFyZ2VzdCBjb25uZWN0ZWQgY29tcG9uZW50IG9mIHRoZSBuZXR3b3JrIChvciBhbm90aGVyIG5ldHdvcmsgY29tcG9uZW50KSBhcyBhIG5ldyBncmFwaCBvYmplY3QgZm9yIGFkZGl0aW9uYWwgYW5hbHlzaXMuIAoKIyMgSG93IG1hbnkgY29tcG9uZW50cyBkb2VzIG15IG5ldHdvcmsgaGF2ZT8gCgpgYGB7cn0Kc2V0LnNlZWQoODgpCmd6IDwtIHNhbXBsZV9nbnAobiA9IDIwLCBwID0gMC4xMCkKcGxvdChneikKCmd6X2NvbXAgPC0gY29tcG9uZW50cyhneikKCmd6X2NvbXAkbWVtYmVyc2hpcCAjIGNvbXBvbmVudCBtZW1iZXJzaGlwIApnel9jb21wJGNzaXplICMgY29tcG9uZW50IHNpemUgCmd6X2NvbXAkbm8gIyBudW1iZXIgb2YgY29tcG9uZW50cyAKYGBgCgojIyBIb3cgY2FuIEkgZXh0cmFjdCBhIHNwZWNpZmljIG5ldHdvcmsgY29tcG9uZW50IGFzIGEgbmV3IG5ldHdvcmsgb2JqZWN0PyAKCldlIGNhbiB1c2UgdGhlIGBpbmR1Y2VkX3N1YmdyYXBoYCBmdW5jdGlvbiB0byBjcmVhdGUgInN1YnNldHMiIG9mIGEgbmV0d29yayBieSBzZWxlY3RpbmcgdGhlIG5vZGVzIHRoYXQgeW91IHdpc2ggdG8ga2VlcC4gVGhlc2Ugbm9kZXMgYW5kIGFsbCB0aGUgZWRnZXMgYW1vbmcgdGhlbSB3aWxsIGJlIHJldGFpbmVkIGluIHRoZSBuZXcgbmV0d29yayBvYmplY3QuIAoKYGBge3J9CiMgZ3pfY29tcCA8LSBjb21wb25lbnRzKGd6KQpnel9sY2MgPC0gaW5kdWNlZF9zdWJncmFwaChncmFwaCA9IGd6LCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgdmlkcyA9IGd6X2NvbXAkbWVtYmVyc2hpcCA9PSB3aGljaC5tYXgoZ3pfY29tcCRjc2l6ZSkgIyBhIFQvRiB2ZWN0b3IgaW5kaWNhdGluZyB0aGUgbm9kZXMgd2hvc2UgY29tcG9uZW50IG1lbWJlcnNoaXAgaXMgdGhlIHNhbWUgYXMgdGhlIGxhcmdlc3QgY29tcG9uZW50IC0gd2UgY2FuIGdldCB0aGlzIGluZm9ybWF0aW9uIGZyb20gdGhlIGNvbXBvbmVudHMgb2JqZWN0IGFib3ZlCiAgICAgICAgICAgICAgICAgICAgICAgICAgICkKCnBsb3QoZ3pfbGNjKQoKIyB5b3UgY2FuIHNwZWNpZnkgYW55IGNvbXBvbmVudCBzaXplIHlvdSB3aXNoCmd6X2hlcm1pdCA8LSBpbmR1Y2VkX3N1YmdyYXBoKGdyYXBoID0gZ3osIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2aWRzID0gZ3pfY29tcCRtZW1iZXJzaGlwID09IDMgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICkKCnBsb3QoZ3pfaGVybWl0KQpgYGAKCiMgQWRkaXRpb25hbCBSZXNvdXJjZXMgCgpPZ255YW5vdmEsIEsuICgyMDIxKSBOZXR3b3JrIHZpc3VhbGl6YXRpb24gd2l0aCBSLiBSZXRyaWV2ZWQgZnJvbSB3d3cua2F0ZXRvLm5ldC9uZXR3b3JrLXZpc3VhbGl6YXRpb24uIGh0dHBzOi8va2F0ZXRvLm5ldC9uZXR3b3JrLXZpc3VhbGl6YXRpb24KClRoZSBvZmZpY2lhbCBgaWdyYXBoYCBtYW51YWwgKHYuMS4zLjQpLiBodHRwczovL2lncmFwaC5vcmcvci9kb2MvIAoKR2VwaGk6IEEgbXVsdGktcGxhdGZvcm0sIGZyZWUgdG8gZG93bmxvYWQgR1VJIGFwcCBmb3IgbmV0d29yayBhbmFseXNpcyBhbmQgdmlzdWFsaXphdGlvbi4gaHR0cHM6Ly9nZXBoaS5vcmcvCgojIFJlZmVyZW5jZXMgCgpCYXJyYXQsIEEuLCBCYXJ0aMOpbGVteSwgTS4sIFBhc3Rvci1TYXRvcnJhcywgUi4sICYgVmVzcGlnbmFuaSwgQS4gKDIwMDQpLiBUaGUgYXJjaGl0ZWN0dXJlIG9mIGNvbXBsZXggd2VpZ2h0ZWQgbmV0d29ya3MuIFByb2NlZWRpbmdzIG9mIHRoZSBOYXRpb25hbCBBY2FkZW15IG9mIFNjaWVuY2VzLCAxMDEoMTEpLCAzNzQ34oCTMzc1Mi4gaHR0cHM6Ly9kb2kub3JnLzEwLjEwNzMvcG5hcy4wNDAwMDg3MTAxCgpCbG9uZGVsLCBWLiBELiwgR3VpbGxhdW1lLCBKLiBMLiwgTGFtYmlvdHRlLCBSLiwgJiBMZWZlYnZyZSwgRS4gKDIwMDgpLiBGYXN0IHVuZm9sZGluZyBvZiBjb21tdW5pdGllcyBpbiBsYXJnZSBuZXR3b3Jrcy4gSm91cm5hbCBvZiBTdGF0aXN0aWNhbCBNZWNoYW5pY3M6IFRoZW9yeSBhbmQgRXhwZXJpbWVudCwgMjAwOCgxMCksIFAxMDAwOC4KCkRlIERleW5lLCBTLiwgTmF2YXJybywgRC4gSi4sIFBlcmZvcnMsIEEuLCBCcnlzYmFlcnQsIE0uLCAmIFN0b3JtcywgRy4gKDIwMTkpLiBUaGUg4oCcU21hbGwgV29ybGQgb2YgV29yZHPigJ0gRW5nbGlzaCB3b3JkIGFzc29jaWF0aW9uIG5vcm1zIGZvciBvdmVyIDEyLDAwMCBjdWUgd29yZHMuIEJlaGF2aW9yIFJlc2VhcmNoIE1ldGhvZHMsIDUxLCA5ODfigJMxMDA2LgoKRm9ydHVuYXRvLCBTLiAoMjAxMCkuIENvbW11bml0eSBkZXRlY3Rpb24gaW4gZ3JhcGhzLiBQaHlzaWNzIFJlcG9ydHMsIDQ4NigzLTUpLCA3NS0xNzQuCgpHaXJ2YW4sIE0uLCAmIE5ld21hbiwgTS4gRS4gKDIwMDIpLiBDb21tdW5pdHkgc3RydWN0dXJlIGluIHNvY2lhbCBhbmQgYmlvbG9naWNhbCBuZXR3b3Jrcy4gUHJvY2VlZGluZ3Mgb2YgdGhlIE5hdGlvbmFsIEFjYWRlbXkgb2YgU2NpZW5jZXMsIDk5KDEyKSwgNzgyMS03ODI2LgoKTHVjZSwgUC4gQS4sICYgUGlzb25pLCBELiBCLiAoMTk5OCkuIFJlY29nbml6aW5nIHNwb2tlbiB3b3JkczogVGhlIE5laWdoYm9yaG9vZCBBY3RpdmF0aW9uIE1vZGVsLiBFYXIgYW5kIEhlYXJpbmcsIDE5KDEpLCAx4oCTMzYuCgpOZXdtYW4sIE0uIEUuICgyMDA2KS4gTW9kdWxhcml0eSBhbmQgY29tbXVuaXR5IHN0cnVjdHVyZSBpbiBuZXR3b3Jrcy4gUHJvY2VlZGluZ3Mgb2YgdGhlIE5hdGlvbmFsIEFjYWRlbXkgb2YgU2NpZW5jZXMsIDEwMygyMyksIDg1NzctODU4Mi4gICAKClBvbnMsIFAuLCAmIExhdGFweSwgTS4gKDIwMDUsIE9jdG9iZXIpLiBDb21wdXRpbmcgY29tbXVuaXRpZXMgaW4gbGFyZ2UgbmV0d29ya3MgdXNpbmcgcmFuZG9tIHdhbGtzLiBJbiBJbnRlcm5hdGlvbmFsIHN5bXBvc2l1bSBvbiBjb21wdXRlciBhbmQgaW5mb3JtYXRpb24gc2NpZW5jZXMgKHBwLiAyODQtMjkzKS4gU3ByaW5nZXIsIEJlcmxpbiwgSGVpZGVsYmVyZy4KClZpdGV2aXRjaCwgTS4gUy4gKDIwMDgpLiBXaGF0IGNhbiBncmFwaCB0aGVvcnkgdGVsbCB1cyBhYm91dCB3b3JkIGxlYXJuaW5nIGFuZCBsZXhpY2FsIHJldHJpZXZhbD8gSm91cm5hbCBvZiBTcGVlY2gsIExhbmd1YWdlLCBhbmQgSGVhcmluZyBSZXNlYXJjaCwgNTEoMiksIDQwOOKAkzQyMi4gaHR0cHM6Ly9kb2kub3JnLzEwLjEwNDQvMTA5Mi00Mzg4KDIwMDgvMDMwKQo=</div>
+<p>Copyright &copy; 2022 CSQ Siew. All rights reserved.</p>
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("part2-demo.Rmd");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

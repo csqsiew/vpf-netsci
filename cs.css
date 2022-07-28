@@ -1,0 +1,24 @@
+.red { color: red; }
+.blue { color: blue; }
+.green { color: green; }
+.orange { color: orange; }
+.purple { color: purple; }
+.yellow { color: yellow; }
+.grey { color: grey; }
+.white { color: white; }
+
+.footnote2 {
+  position: absolute;
+  bottom: 60px;
+  padding-right: 4em;
+  font-size: 0.7em;
+}
+
+.bigger {
+  font-size: 1.2em;
+}
+
+.caption {
+  text-align: center;
+  font-size: .8rem;
+}
