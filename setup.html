@@ -13,7 +13,7 @@
 
 <title>Getting Ready</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -141,11 +141,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -174,8 +178,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -183,16 +187,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -252,10 +249,13 @@ $(document).ready(function () {
   <a href="setup.html">Setup</a>
 </li>
 <li>
-  <a href="part1-intro.html">Slides</a>
+  <a href="part1-intro.html">Slides (VPF)</a>
 </li>
 <li>
-  <a href="part2-demo.html">Workbook</a>
+  <a href="part2-demo.html">Workbook (VPF)</a>
+</li>
+<li>
+  <a href="CompCog23.html">Workbook (CompCog)</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -282,8 +282,17 @@ on your local computer in order to follow along with the Workbook.</p>
 <p>Then, install the <code>igraph</code> R package with the following:
 <code>install.packages("igraph")</code></p>
 </div>
-<div id="tutorial-materials" class="section level2">
-<h2>Tutorial Materials</h2>
+<div id="materials-for-compcog23" class="section level2">
+<h2>Materials for CompCog23</h2>
+<p><strong>Workbook</strong>: You can download the Rmarkdown document <a
+href="CompCog23.html">here</a>. Click on ‘Code’ &gt; ‘Download Rmd’.</p>
+<p><strong>Data</strong>: You can download the example networks
+(<code>example-data-compcog.RData</code>) <a
+href="https://github.com/csqsiew/vpf-netsci/blob/main/data/example-data-compcog.RData">at
+the site’s Github page</a>. Click on the ‘Download’ button.</p>
+</div>
+<div id="tutorial-materials-for-vpf22" class="section level2">
+<h2>Tutorial Materials for VPF22</h2>
 <p><strong>Workbook</strong>: You can download the Rmarkdown document <a
 href="part2-demo.html">here</a>. Click on ‘Code’ &gt; ‘Download
 Rmd’.</p>
@@ -301,7 +310,7 @@ It will work in any browser. If you really like the slides in
 href="https://bit.ly/vpf-netsci-slides">here</a>.</p>
 </div>
 
-<p>Copyright &copy; 2022 CSQ Siew. All rights reserved.</p>
+<p>Copyright &copy; 2023 CSQ Siew. All rights reserved.</p>
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
